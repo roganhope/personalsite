@@ -1,1 +1,49 @@
 @import "tailwindcss";
+
+@theme {
+  --color-ink: #171516;
+  --color-paper: #fff;
+  --color-muted: #787274;
+  --color-line: #e2dfe0;
+  --color-pink: #ff3b8d;
+
+  --animate-grid-pulse: grid-pulse 11s ease-in-out infinite;
+
+  @keyframes grid-pulse {
+    0%,
+    62%,
+    100% {
+      background: transparent;
+    }
+    10%,
+    32% {
+      background: rgb(255 59 141 / 0.2);
+    }
+  }
+}
+
+@theme inline {
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  /* Custom pointer is hidden until a real cursor and no reduced-motion
+     preference confirm it's safe to take over the system cursor. */
+  .site-pointer {
+    display: none;
+  }
+
+  @media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+    .site-pointer {
+      display: block;
+    }
+
+    /* !important so this beats the cursor-pointer utilities on the project
+       cards and accordion triggers, which coarse-pointer users still get. */
+    body,
+    a,
+    button {
+      cursor: none !important;
+    }
+  }
+}

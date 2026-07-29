@@ -1,9 +1,17 @@
 import type { Metadata } from "next";
+import { Plus_Jakarta_Sans } from "next/font/google";
+import AnimatedGrid from "@/components/animated-grid";
+import SitePointer from "@/components/site-pointer";
 import "./globals.css";
 
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  variable: "--font-jakarta",
+});
+
 export const metadata: Metadata = {
-  title: "hoperogan.com",
-  description: "Personal site and blog of Hope Rogan. Coming soon.",
+  title: "Hope Elizabeth Rogan",
+  description: "Product management and engineering portfolio for Hope Elizabeth Rogan.",
 };
 
 export default function RootLayout({
@@ -12,8 +20,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className="min-h-full">{children}</body>
+    <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
+      <body className="bg-paper font-sans text-base font-medium text-ink">
+        <AnimatedGrid />
+        <SitePointer />
+        {children}
+      </body>
     </html>
   );
 }
