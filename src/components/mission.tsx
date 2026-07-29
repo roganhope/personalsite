@@ -14,7 +14,7 @@ export default function Mission() {
         <p className="mx-auto max-w-[690px] text-[clamp(1.25rem,2.4vw,1.75rem)] leading-[1.35] tracking-[-.035em]">
           From an early idea to a delivered product, I love being part of every step. AI has made it possible to
           build more broadly and move ideas forward faster - across{" "}
-          <strong className="relative z-0 font-bold after:absolute after:-z-10 after:right-[-.08em] after:bottom-[.04em] after:left-[-.08em] after:h-[.16em] after:bg-pink after:content-['']">
+          <strong className="box-decoration-clone bg-[linear-gradient(to_top,transparent_0,transparent_.04em,var(--color-pink)_.04em,var(--color-pink)_.2em,transparent_.2em,transparent_3em)] font-bold">
             people, design, and technical architecture.
           </strong>
         </p>
