@@ -7,7 +7,7 @@ export default function SiteFooter() {
       <Wrap className="flex items-center justify-end gap-4.5 text-[.8rem] max-[700px]:flex-col">
         <div className="flex gap-4.5 font-bold">
           <a
-            href="https://www.linkedin.com/"
+            href="https://www.linkedin.com/in/hoperogan/"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.75 hover:text-pink"
@@ -16,7 +16,7 @@ export default function SiteFooter() {
             LinkedIn ↗
           </a>
           <a
-            href="https://github.com/"
+            href="https://github.com/roganhope"
             target="_blank"
             rel="noreferrer"
             className="inline-flex items-center gap-1.75 hover:text-pink"
