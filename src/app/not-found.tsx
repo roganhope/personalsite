@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Button from "@/components/button";
+import CountdownHomeButton from "@/components/countdown-home-button";
 import { GlyphMatrix } from "@/components/glyph-matrix";
 import SiteFooter from "@/components/site-footer";
 import SiteHeader from "@/components/site-header";
@@ -26,14 +26,15 @@ export default function NotFound() {
           />
           <Wrap className="relative grid min-h-[calc(100vh-84px)] place-items-center px-0 py-17.5 pb-25 text-center">
             <div>
-              <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">404</p>
               <h1 className="mx-auto mb-5.5 max-w-[680px] text-[clamp(2.25rem,5vw,4.15rem)] leading-[.98] font-bold tracking-[-.07em]">
-                This page took a wrong turn.
+                404
               </h1>
               <p className="mx-auto mb-8 max-w-[500px] text-[1.05rem] text-muted">
-                Whatever you were looking for isn&apos;t here. Let&apos;s get you back on track.
+                I don&apos;t even know how you managed to end up here.
+                <br />
+                Let&apos;s get you back home.
               </p>
-              <Button href="/">Take me home ↘</Button>
+              <CountdownHomeButton />
             </div>
           </Wrap>
         </section>
