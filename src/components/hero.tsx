@@ -18,7 +18,7 @@ export default function Hero() {
           <p className="mx-auto mb-8 max-w-[540px] text-[1.08rem] text-[#3e3d3a]">
             I work in product management and engineering.
           </p>
-          <Button href="#contact">Let&apos;s make something ↘</Button>
+          <Button href="/#contact">Let&apos;s make something ↘</Button>
         </div>
       </Wrap>
     </section>
