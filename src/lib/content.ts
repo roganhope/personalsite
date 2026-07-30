@@ -16,6 +16,11 @@ export type Role = {
   years: string;
 };
 
+export type SkillCategory = {
+  label: string;
+  skills: string[];
+};
+
 export const projects: Project[] = [
   {
     label: "01 / Product",
@@ -66,6 +71,82 @@ export const roles: Role[] = [
     company: "EQRx",
     focus: "",
     years: "2021 - 2024",
+  },
+];
+
+export const skillCategories: SkillCategory[] = [
+  {
+    label: "Languages",
+    skills: ["Python", "Java", "TypeScript", "JavaScript", "SQL", "HTML/CSS", "jQuery", "PHP", "LaTeX"],
+  },
+  {
+    label: "Frameworks",
+    skills: ["Next.js", "Spring Boot", "React", "Node.js", "FastAPI", "Flask", "Django", "Tornado"],
+  },
+  {
+    label: "UI Libraries",
+    skills: ["Bootstrap", "MagicUI", "Tailwind"],
+  },
+  {
+    label: "Tools",
+    skills: [
+      "Git",
+      "Visual Studio",
+      "Slack",
+      "Discord",
+      "Teams",
+      "G Suite",
+      "Miro",
+      "LucidChart",
+      "Photoshop",
+      "Jira",
+      "Node.js",
+      "Supabase",
+      "Vercel",
+    ],
+  },
+  {
+    label: "Cloud & DevOps",
+    skills: [
+      "AWS",
+      "Bedrock",
+      "EC2",
+      "IAM",
+      "OIDC",
+      "AWS Secrets",
+      "Lambda",
+      "DynamoDB",
+      "S3",
+      "Docker",
+      "GitHub Actions",
+      "GCP",
+      "Heroku",
+    ],
+  },
+  {
+    label: "Databases",
+    skills: ["MySQL", "MongoDB", "Postgres", "Redis", "DynamoDB"],
+  },
+  {
+    label: "AI & Agentic",
+    skills: [
+      "Claude Code",
+      "Cursor",
+      "Codex",
+      "ChatGPT",
+      "Google AI SDK",
+      "MCP",
+      "AI Plugins",
+      "AG-UI",
+      "Anthropic API",
+      "Spring AI",
+      "TensorFlow",
+      "Keras",
+    ],
+  },
+  {
+    label: "Libraries & Data",
+    skills: ["pandas", "PostHog", "NumPy", "Matplotlib", "Seaborn", "Pytest"],
   },
 ];
 
