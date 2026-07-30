@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { File, Folder, Tree } from "./magicui/file-tree";
 import Section from "./section";
 import Wrap from "./wrap";
@@ -109,6 +110,7 @@ export default function Skills() {
                     key={`${category.label}/${skill}`}
                     value={`${category.label}/${skill}`}
                     fileIcon={<SkillIcon skill={skill} />}
+                    onClick={() => posthog.capture("skill_clicked", { skill, category: category.label })}
                   >
                     <span>{skill}</span>
                   </File>
