@@ -1,14 +1,16 @@
-import Button from "./button";
+import ContactForm from "./contact-form";
+import MagicCard from "./magic-card";
 import Section from "./section";
 import Wrap from "./wrap";
-import { EMAIL } from "@/lib/content";
 
 export default function Contact() {
   return (
     <Section id="contact" className="bg-white/30">
-      <Wrap>
+      <Wrap className="max-w-[560px]">
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-pink uppercase">Get in touch</p>
-        <Button href={`mailto:${EMAIL}`}>{EMAIL} ↗</Button>
+        <MagicCard className="p-8 shadow-[4px_4px_0_var(--color-pink)] max-[500px]:p-6">
+          <ContactForm />
+        </MagicCard>
       </Wrap>
     </Section>
   );
