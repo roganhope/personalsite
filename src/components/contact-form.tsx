@@ -1,6 +1,8 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
+import { useLayoutEffect, useRef, useState } from "react";
+import { Confetti } from "./confetti";
 
 const fieldClassName =
   "w-full rounded-lg border border-line bg-white px-4 py-3 text-[.9rem] text-ink outline-none transition-colors duration-150 focus:border-pink";
@@ -9,13 +11,29 @@ const labelClassName = "mb-1.5 block text-left text-[.7rem] font-[850] tracking-
 
 export default function ContactForm() {
   const [state, handleSubmit] = useForm("mqerjgvp");
+  const formRef = useRef<HTMLFormElement>(null);
+  const [formHeight, setFormHeight] = useState<number>();
+
+  useLayoutEffect(() => {
+    if (formRef.current) setFormHeight(formRef.current.offsetHeight);
+  }, []);
 
   if (state.succeeded) {
-    return <p className="m-0 text-[1rem] text-ink">Thanks for reaching out — I&apos;ll get back to you soon.</p>;
+    return (
+      <div
+        className="relative flex items-center justify-center overflow-hidden text-center"
+        style={{ minHeight: formHeight }}
+      >
+        <Confetti className="absolute inset-0 h-full w-full" />
+        <p className="relative z-10 m-0 text-[1rem] text-ink">
+          Thanks for reaching out — I&apos;ll get back to you soon.
+        </p>
+      </div>
+    );
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto flex max-w-[480px] flex-col gap-5 text-left">
+    <form ref={formRef} onSubmit={handleSubmit} className="mx-auto flex max-w-[480px] flex-col gap-5 text-left">
       <div>
         <label htmlFor="name" className={labelClassName}>
           Name
