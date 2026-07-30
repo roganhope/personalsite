@@ -96,7 +96,7 @@ export default function Skills() {
             <button
               type="button"
               onClick={collapseAll}
-              className="absolute top-1/2 right-full mr-4 hidden -translate-y-1/2 rounded-full border border-line bg-white/56 px-3 py-2 text-[.72rem] font-[850] tracking-[.1em] text-muted uppercase transition-colors duration-150 hover:border-ink hover:text-ink min-[960px]:block"
+              className="absolute top-1/2 right-full mr-4 hidden -translate-y-1/2 rounded-full border border-line bg-white/56 px-3 py-2 text-[.72rem] font-[850] tracking-[.1em] whitespace-nowrap text-muted uppercase transition-colors duration-150 hover:border-ink hover:text-ink min-[960px]:block"
             >
               Collapse all
             </button>
