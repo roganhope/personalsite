@@ -14,7 +14,7 @@ function ResumeIcon() {
 
 export default function Experience() {
   return (
-    <Section id="work">
+    <Section>
       <Wrap>
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
           The résumé version
