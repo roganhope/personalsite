@@ -32,6 +32,7 @@ export default function ExperienceList() {
               />
             </button>
             <div
+              aria-hidden={!isOpen}
               className={`grid border-t transition-[grid-template-rows_.38s_cubic-bezier(.22,1,.36,1),border-color_.38s_ease] ${
                 isOpen ? "grid-rows-[1fr] border-line" : "grid-rows-[0fr] border-transparent"
               }`}

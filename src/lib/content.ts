@@ -33,7 +33,7 @@ export const projects: Project[] = [
   },
   {
     label: "02 / Commerce",
-    title: "Biker's Outfitter",
+    title: "Bikers Outfitter",
     copy: "A high-energy commerce experience for riders, motorcycles, scooters, and parts.",
     href: "https://bikersoutfitter.com/",
     image: "/bikers-outfitter.png",
@@ -110,7 +110,7 @@ export const roles: Role[] = [
       "Successfully migrated the organization's email infrastructure to a new provider, managing domain and DNS transitions while preserving all existing mailboxes and minimizing service downtime.",
     ],
     funFact:
-      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for shows from the age of 8, and learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitters, where you will find me at the age of 3 sitting on a motorcycle.",
+      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for shows from the age of 8, and learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitter, where you will find me at the age of 3 sitting on a motorcycle.",
   },
 ];
 
