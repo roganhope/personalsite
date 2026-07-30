@@ -51,7 +51,6 @@ type TreeContextProps = {
   indicator: boolean;
   handleExpand: (id: string) => void;
   selectItem: (id: string) => void;
-  setExpandedItems?: React.Dispatch<React.SetStateAction<string[] | undefined>>;
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
 };
@@ -116,6 +115,8 @@ type TreeViewProps = {
   indicator?: boolean;
   elements?: TreeViewElement[];
   initialExpandedItems?: string[];
+  expandedItems?: string[];
+  onExpandedItemsChange?: (items: string[]) => void;
   openIcon?: React.ReactNode;
   closeIcon?: React.ReactNode;
   sort?: TreeSortMode;
@@ -123,23 +124,49 @@ type TreeViewProps = {
 
 const Tree = forwardRef<HTMLDivElement, TreeViewProps>(
   (
-    { className, elements, initialSelectedId, initialExpandedItems, children, indicator = true, openIcon, closeIcon, sort = "default", ...props },
+    {
+      className,
+      elements,
+      initialSelectedId,
+      initialExpandedItems,
+      expandedItems: controlledExpandedItems,
+      onExpandedItemsChange,
+      children,
+      indicator = true,
+      openIcon,
+      closeIcon,
+      sort = "default",
+      ...props
+    },
     ref
   ) => {
     const [selectedId, setSelectedId] = useState<string | undefined>(initialSelectedId);
-    const [expandedItems, setExpandedItems] = useState<string[] | undefined>(initialExpandedItems);
+    const [internalExpandedItems, setInternalExpandedItems] = useState<string[] | undefined>(initialExpandedItems);
+
+    const isControlled = controlledExpandedItems !== undefined;
+    const expandedItems = isControlled ? controlledExpandedItems : internalExpandedItems;
 
     const selectItem = useCallback((id: string) => setSelectedId(id), []);
 
-    const handleExpand = useCallback((id: string) => {
-      setExpandedItems((prev) => (prev?.includes(id) ? prev.filter((item) => item !== id) : [...(prev ?? []), id]));
-    }, []);
+    const handleExpand = useCallback(
+      (id: string) => {
+        const next = expandedItems?.includes(id)
+          ? (expandedItems ?? []).filter((item) => item !== id)
+          : [...(expandedItems ?? []), id];
+        if (isControlled) {
+          onExpandedItemsChange?.(next);
+        } else {
+          setInternalExpandedItems(next);
+        }
+      },
+      [expandedItems, isControlled, onExpandedItemsChange]
+    );
 
     const treeChildren = children ?? (elements ? renderTreeElements(elements, sort) : null);
 
     return (
       <TreeContext.Provider
-        value={{ selectedId, expandedItems, handleExpand, selectItem, setExpandedItems, indicator, openIcon, closeIcon }}
+        value={{ selectedId, expandedItems, handleExpand, selectItem, indicator, openIcon, closeIcon }}
       >
         <div ref={ref} className={cn("relative w-full", className)}>
           <AccordionPrimitive.Root {...props} type="multiple" value={expandedItems} className="flex flex-col gap-1">
