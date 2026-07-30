@@ -13,11 +13,8 @@ export default function SiteHeader() {
             <Link href="/#work" className="hover:text-pink">
               Work
             </Link>
-            <Link href="/#about" className="hover:text-pink">
-              About
-            </Link>
             <Link href="/#contact" className="hover:text-pink">
-              Say hey
+              Contact
             </Link>
           </div>
         </nav>
