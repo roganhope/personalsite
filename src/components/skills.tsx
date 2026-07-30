@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
 import { File, Folder, Tree } from "./magicui/file-tree";
 import Section from "./section";
 import Wrap from "./wrap";
@@ -62,15 +65,42 @@ function SkillIcon({ skill }: { skill: string }) {
   return <img src={`/skill-icons/${file}`} alt="" className="h-4 w-4 shrink-0 object-contain" />;
 }
 
+const TALL_THRESHOLD_PX = 400;
+
 export default function Skills() {
+  const [expandedItems, setExpandedItems] = useState<string[]>([skillCategories[0].label]);
+  const [isTall, setIsTall] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setIsTall(entry.contentRect.height > TALL_THRESHOLD_PX);
+    });
+    observer.observe(card);
+    return () => observer.disconnect();
+  }, []);
+
+  const collapseAll = () => setExpandedItems([]);
+
   return (
     <Section id="skills">
       <Wrap className="max-w-[560px]">
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
           Skill Tree
         </p>
-        <div className="rounded-[20px] border border-line bg-white/56 p-4 text-left">
-          <Tree sort="none" initialExpandedItems={[skillCategories[0].label]}>
+        <div ref={cardRef} className="relative rounded-[20px] border border-line bg-white/56 p-4 text-left">
+          {isTall && (
+            <button
+              type="button"
+              onClick={collapseAll}
+              className="absolute top-1/2 right-full mr-4 hidden -translate-y-1/2 rounded-full border border-line bg-white/56 px-3 py-2 text-[.72rem] font-[850] tracking-[.1em] text-muted uppercase transition-colors duration-150 hover:border-ink hover:text-ink min-[960px]:block"
+            >
+              Collapse all
+            </button>
+          )}
+          <Tree sort="none" expandedItems={expandedItems} onExpandedItemsChange={setExpandedItems}>
             {skillCategories.map((category) => (
               <Folder key={category.label} value={category.label} element={category.label}>
                 {category.skills.map((skill) => (
