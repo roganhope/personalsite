@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AnimatedGrid from "@/components/animated-grid";
-import SitePointer from "@/components/site-pointer";
 import "./globals.css";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -35,7 +34,6 @@ export default function RootLayout({
     <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
       <body className="bg-paper font-sans text-base font-medium text-ink">
         <AnimatedGrid />
-        <SitePointer />
         {children}
       </body>
     </html>
