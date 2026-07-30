@@ -23,6 +23,15 @@ const UNDERLINE_DELAY = HOPE_LETTERS_DONE + UNDERLINE_GAP;
 const SUBTITLE_DELAY_MS =
   (UNDERLINE_DELAY + UNDERLINE_DURATION + GAP_BEFORE_SUBTITLE) * 1000;
 
+const SUBTITLE_TEXT = "Hope Elizabeth Rogan";
+const SUBTITLE_MS_PER_CHAR = 100; // matches TypingAnimation's default `duration`
+
+// When the subtitle finishes typing, in ms — exported so content that should
+// only appear once the heading is fully done (e.g. the tagline and CTA
+// button) can time their own entrance off of it.
+export const HERO_HEADING_DONE_MS =
+  SUBTITLE_DELAY_MS + SUBTITLE_TEXT.length * SUBTITLE_MS_PER_CHAR;
+
 export default function HeroHeading() {
   return (
     <>
@@ -77,7 +86,7 @@ export default function HeroHeading() {
         delay={SUBTITLE_DELAY_MS}
         startOnView={false}
       >
-        Hope Elizabeth Rogan
+        {SUBTITLE_TEXT}
       </TypingAnimation>
     </>
   );
