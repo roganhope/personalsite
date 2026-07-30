@@ -1,7 +1,8 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { Confetti } from "./confetti";
 
 const fieldClassName =
@@ -17,6 +18,10 @@ export default function ContactForm() {
   useLayoutEffect(() => {
     if (formRef.current) setFormHeight(formRef.current.offsetHeight);
   }, []);
+
+  useEffect(() => {
+    if (state.succeeded) posthog.capture("contact_form_submitted");
+  }, [state.succeeded]);
 
   if (state.succeeded) {
     return (
