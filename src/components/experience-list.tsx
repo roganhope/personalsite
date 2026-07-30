@@ -44,7 +44,10 @@ export default function ExperienceList() {
                     : "-translate-y-2 pt-0 pb-0 opacity-0"
                 }`}
               >
-                <p className="m-0 max-w-[470px] text-[.92rem] text-ink">{role.copy}</p>
+                <div className="max-w-[470px]">
+                  <p className="m-0 text-[.92rem] text-ink">{role.copy}</p>
+                  <p className="m-0 mt-1.5 text-[.76rem] font-[750] text-muted uppercase">Details coming soon</p>
+                </div>
                 <Pills items={role.skills} className="max-w-[300px] justify-end max-[700px]:justify-start" />
               </div>
             </div>
