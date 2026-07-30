@@ -43,7 +43,15 @@ export default function ExperienceList() {
                     : "-translate-y-2 pt-0 pb-0 opacity-0"
                 }`}
               >
-                <p className="m-0 text-[.76rem] font-[750] text-muted uppercase">Details coming soon</p>
+                <ul className="m-0 list-disc space-y-2 pl-5 text-[.92rem] text-muted marker:text-pink">
+                  {role.bullets.map((bullet) => (
+                    <li key={bullet}>{bullet}</li>
+                  ))}
+                </ul>
+                <p className="mt-4 text-[.92rem]">
+                  <span className="font-bold text-pink">Fun Fact: </span>
+                  <em className="text-muted italic">{role.funFact}</em>
+                </p>
               </div>
             </div>
           </article>
