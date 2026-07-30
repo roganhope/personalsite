@@ -1,30 +1,28 @@
+import { Tree, type TreeViewElement } from "./magicui/file-tree";
 import Section from "./section";
 import Wrap from "./wrap";
 import { skillCategories } from "@/lib/content";
 
+const elements: TreeViewElement[] = skillCategories.map((category) => ({
+  id: category.label,
+  name: category.label,
+  type: "folder",
+  children: category.skills.map((skill) => ({
+    id: `${category.label}/${skill}`,
+    name: skill,
+    type: "file",
+  })),
+}));
+
 export default function Skills() {
   return (
     <Section id="skills">
-      <Wrap>
+      <Wrap className="max-w-[560px]">
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
           What I work with
         </p>
-        <div className="mx-auto grid w-[min(100%,800px)] gap-6 text-left">
-          {skillCategories.map((category) => (
-            <div key={category.label}>
-              <h3 className="m-0 mb-3 text-[.92rem] font-bold">{category.label}</h3>
-              <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
-                {category.skills.map((skill) => (
-                  <li
-                    key={skill}
-                    className="rounded-full border border-line bg-white/56 px-3.5 py-1.5 text-[.82rem] text-muted"
-                  >
-                    {skill}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+        <div className="rounded-[20px] border border-line bg-white/56 p-4 text-left">
+          <Tree elements={elements} sort="none" initialExpandedItems={[skillCategories[0].label]} />
         </div>
       </Wrap>
     </Section>
