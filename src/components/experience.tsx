@@ -23,7 +23,7 @@ export default function Experience() {
         <p className="mt-8">
           <Button href="/resume.pdf" target="_blank">
             <ResumeIcon />
-            Grab the full résumé ↗
+            Résumé coming soon ↗
           </Button>
         </p>
       </Wrap>
