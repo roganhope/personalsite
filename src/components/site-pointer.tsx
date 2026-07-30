@@ -38,7 +38,7 @@ export default function SitePointer() {
       ref={pointerRef}
       viewBox="0 0 32 32"
       aria-hidden="true"
-      className="site-pointer pointer-events-none fixed top-0 left-0 z-[60] h-[30px] w-[30px] text-pink transition-transform duration-[60ms] ease-linear [transform:translate(-100px,-100px)]"
+      className="site-pointer pointer-events-none fixed top-0 left-0 z-50 h-[30px] w-[30px] text-pink transition-transform duration-[60ms] ease-linear [transform:translate(-100px,-100px)]"
     >
       <path
         d="M4 2.5 26.2 14 16 17.2 12.3 27 4 2.5Z"

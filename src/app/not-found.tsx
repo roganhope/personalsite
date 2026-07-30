@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import CountdownHomeButton from "@/components/countdown-home-button";
 import { GlyphMatrix } from "@/components/glyph-matrix";
 import SiteFooter from "@/components/site-footer";
+import SiteHeader from "@/components/site-header";
 import Wrap from "@/components/wrap";
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <>
+      <SiteHeader />
       <main className="relative z-10">
         <section className="relative min-h-[calc(100vh-84px)] overflow-hidden border-t border-line">
           <GlyphMatrix

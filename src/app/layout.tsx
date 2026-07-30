@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import AnimatedGrid from "@/components/animated-grid";
-import SiteDock from "@/components/site-dock";
 import SitePointer from "@/components/site-pointer";
 import "./globals.css";
 
@@ -26,7 +25,6 @@ export default function RootLayout({
         <AnimatedGrid />
         <SitePointer />
         {children}
-        <SiteDock />
       </body>
     </html>
   );
