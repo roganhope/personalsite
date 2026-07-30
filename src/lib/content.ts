@@ -25,8 +25,6 @@ export type Role = {
   company: string;
   focus: string;
   years: string;
-  copy: string;
-  skills: Skill[];
 };
 
 export const skillGroups: SkillGroup[] = [
@@ -91,43 +89,24 @@ export const projects: Project[] = [
   },
 ];
 
-// TODO: placeholder work history — companies, dates, and descriptions are invented.
 export const roles: Role[] = [
   {
-    title: "Senior Front-end Developer",
-    company: "Northstar Studio",
-    focus: "Product systems & web platforms",
-    years: "2022 - now",
-    copy: "Partnered with design and product to build a flexible interface system and ship a much-loved client platform.",
-    skills: [
-      { initial: "R", name: "React" },
-      { initial: "T", name: "TypeScript" },
-      { initial: "A", name: "Accessibility" },
-    ],
+    title: "Product Manager & Lead Software Engineer",
+    company: "The Jade Platform",
+    focus: "",
+    years: "2025 - Now",
   },
   {
-    title: "Product Engineer",
-    company: "Kindred Labs",
-    focus: "Useful tools for busy teams",
-    years: "2019 - 2022",
-    copy: "Designed and built end-to-end features for a small collaborative product, from rough sketch through release.",
-    skills: [
-      { initial: "N", name: "Next.js" },
-      { initial: "P", name: "Postgres" },
-      { initial: "F", name: "Figma" },
-    ],
+    title: "Full Stack Web Design Teaching Assistant",
+    company: "Tufts University",
+    focus: "",
+    years: "2023 - 2024",
   },
   {
-    title: "Developer",
-    company: "Field Notes Co.",
-    focus: "Expressive sites for good people",
-    years: "2017 - 2019",
-    copy: "Built fast, characterful websites for people making culture, products, and other good things.",
-    skills: [
-      { initial: "C", name: "CSS" },
-      { initial: "W", name: "Web perf" },
-      { initial: "G", name: "Git" },
-    ],
+    title: "Data Science Intern & Business Professional",
+    company: "EQRx",
+    focus: "",
+    years: "2021 - 2024",
   },
 ];
 

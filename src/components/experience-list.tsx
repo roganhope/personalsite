@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Pills from "./pills";
 import { roles } from "@/lib/content";
 
 export default function ExperienceList() {
@@ -38,17 +37,13 @@ export default function ExperienceList() {
               }`}
             >
               <div
-                className={`grid min-h-0 grid-cols-[1fr_auto] items-end gap-5 overflow-hidden px-6 transition-[padding_.38s_cubic-bezier(.22,1,.36,1),opacity_.2s_ease,transform_.32s_ease] max-[700px]:grid-cols-1 max-[700px]:gap-2.5 ${
+                className={`grid min-h-0 overflow-hidden px-6 transition-[padding_.38s_cubic-bezier(.22,1,.36,1),opacity_.2s_ease,transform_.32s_ease] ${
                   isOpen
                     ? "translate-y-0 pt-[22px] pb-[25px] opacity-100"
                     : "-translate-y-2 pt-0 pb-0 opacity-0"
                 }`}
               >
-                <div className="max-w-[470px]">
-                  <p className="m-0 text-[.92rem] text-ink">{role.copy}</p>
-                  <p className="m-0 mt-1.5 text-[.76rem] font-[750] text-muted uppercase">Details coming soon</p>
-                </div>
-                <Pills items={role.skills} className="max-w-[300px] justify-end max-[700px]:justify-start" />
+                <p className="m-0 text-[.76rem] font-[750] text-muted uppercase">Details coming soon</p>
               </div>
             </div>
           </article>
