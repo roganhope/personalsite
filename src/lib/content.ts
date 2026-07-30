@@ -1,14 +1,3 @@
-export type Skill = {
-  /** Single-letter badge shown in the pill. */
-  initial: string;
-  name: string;
-};
-
-export type SkillGroup = {
-  category: string;
-  skills: Skill[];
-};
-
 export type Project = {
   /** Eyebrow label, e.g. "01 / Product". */
   label: string;
@@ -26,36 +15,6 @@ export type Role = {
   focus: string;
   years: string;
 };
-
-export const skillGroups: SkillGroup[] = [
-  {
-    category: "Front end",
-    skills: [
-      { initial: "R", name: "React" },
-      { initial: "T", name: "TypeScript" },
-      { initial: "N", name: "Next.js" },
-      { initial: "C", name: "CSS" },
-    ],
-  },
-  {
-    category: "Back end",
-    skills: [
-      { initial: "N", name: "Node.js" },
-      { initial: "P", name: "Python" },
-      { initial: "P", name: "Postgres" },
-      { initial: "A", name: "APIs" },
-    ],
-  },
-  {
-    category: "Also into",
-    skills: [
-      { initial: "F", name: "Figma" },
-      { initial: "G", name: "Git" },
-      { initial: "A", name: "Accessibility" },
-      { initial: "W", name: "Web perf" },
-    ],
-  },
-];
 
 export const projects: Project[] = [
   {
