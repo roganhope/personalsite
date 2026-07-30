@@ -100,10 +100,12 @@ export const skillCategories: SkillCategory[] = [
       "LucidChart",
       "Photoshop",
       "Jira",
-      "Node.js",
-      "Supabase",
-      "Vercel",
+      "Postman",
     ],
+  },
+  {
+    label: "Platform",
+    skills: ["Node.js", "Supabase", "Vercel"],
   },
   {
     label: "Cloud & DevOps",
