@@ -45,11 +45,14 @@ export default function ExperienceList() {
                 }`}
               >
                 <ul className="m-0 list-disc space-y-2 pl-5 text-[.92rem] text-muted marker:text-pink">
-                  {role.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
+                  {role.bullets.map((bullet, bulletIndex) => (
+                    <li key={bulletIndex}>
+                      {bullet.lead && <strong className="font-bold text-ink">{bullet.lead}</strong>}
+                      {bullet.text}
+                    </li>
                   ))}
                 </ul>
-                <p className="mt-4 text-[.92rem]">
+                <p className="mt-4 pl-5 text-[.92rem]">
                   <span className="font-bold text-pink">Fun Fact: </span>
                   <em className="text-muted italic">{role.funFact}</em>
                 </p>
