@@ -67,7 +67,7 @@ export default function Skills() {
     <Section id="skills">
       <Wrap className="max-w-[560px]">
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
-          What I work with
+          Skill Tree
         </p>
         <div className="rounded-[20px] border border-line bg-white/56 p-4 text-left">
           <Tree sort="none" initialExpandedItems={[skillCategories[0].label]}>
