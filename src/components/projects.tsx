@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import posthog from "posthog-js";
 import Section from "./section";
 import Wrap from "./wrap";
 import { projects } from "@/lib/content";
@@ -40,6 +43,7 @@ export default function Projects() {
                   href={project.href}
                   target={external ? "_blank" : undefined}
                   rel={external ? "noreferrer" : undefined}
+                  onClick={() => posthog.capture("project_link_clicked", { project: project.title, href: project.href })}
                   className="relative mt-5 text-[.78rem] font-extrabold tracking-[.06em] uppercase after:absolute after:inset-0 after:content-['']"
                 >
                   See the work ↗
