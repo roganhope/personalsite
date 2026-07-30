@@ -83,6 +83,7 @@ export default function Skills() {
   }, []);
 
   const collapseAll = () => setExpandedItems([]);
+  const anyExpanded = expandedItems.length > 0;
 
   return (
     <Section id="skills">
@@ -115,6 +116,15 @@ export default function Skills() {
               </Folder>
             ))}
           </Tree>
+          {anyExpanded && (
+            <button
+              type="button"
+              onClick={collapseAll}
+              className="mt-3 hidden w-full rounded-full border border-line bg-white/56 px-3 py-2 text-[.72rem] font-[850] tracking-[.1em] text-muted uppercase transition-colors duration-150 hover:border-ink hover:text-ink max-[960px]:block"
+            >
+              Collapse all
+            </button>
+          )}
         </div>
       </Wrap>
     </Section>
