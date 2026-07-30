@@ -32,6 +32,7 @@ export default function ExperienceList() {
               />
             </button>
             <div
+              aria-hidden={!isOpen}
               className={`grid border-t transition-[grid-template-rows_.38s_cubic-bezier(.22,1,.36,1),border-color_.38s_ease] ${
                 isOpen ? "grid-rows-[1fr] border-line" : "grid-rows-[0fr] border-transparent"
               }`}
@@ -43,7 +44,18 @@ export default function ExperienceList() {
                     : "-translate-y-2 pt-0 pb-0 opacity-0"
                 }`}
               >
-                <p className="m-0 text-[.76rem] font-[750] text-muted uppercase">Details coming soon</p>
+                <ul className="m-0 list-disc space-y-2 pl-5 text-[.92rem] text-muted marker:text-pink">
+                  {role.bullets.map((bullet, bulletIndex) => (
+                    <li key={bulletIndex}>
+                      {bullet.lead && <strong className="font-bold text-ink">{bullet.lead}</strong>}
+                      {bullet.text}
+                    </li>
+                  ))}
+                </ul>
+                <p className="mt-4 pl-5 text-[.92rem]">
+                  <span className="font-bold text-pink">Fun Fact: </span>
+                  <em className="text-muted italic">{role.funFact}</em>
+                </p>
               </div>
             </div>
           </article>
