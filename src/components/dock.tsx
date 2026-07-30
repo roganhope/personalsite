@@ -7,7 +7,7 @@ import { motion, type MotionValue, useMotionValue, useSpring, useTransform } fro
 /**
  * Adapted from magicui.design's Dock, trimmed to this site's actual
  * dependencies (no class-variance-authority, no cn() helper, no Radix
- * tooltip) and restyled to match the site's bold-border/hard-shadow look.
+ * tooltip). Visual styling is kept close to the original component.
  */
 
 const DEFAULT_SIZE = 44;
@@ -53,7 +53,7 @@ export function Dock({
     <motion.div
       onMouseMove={(e) => mouseX.set(e.pageX)}
       onMouseLeave={() => mouseX.set(Infinity)}
-      className={`flex items-center gap-1 rounded-full border border-ink bg-white/95 p-2 shadow-[4px_4px_0_var(--color-pink)] backdrop-blur-md ${className}`}
+      className={`flex h-[58px] w-max items-center justify-center gap-2 rounded-2xl border border-line bg-white/70 p-2 backdrop-blur-md ${className}`}
     >
       {renderChildren()}
     </motion.div>
@@ -90,8 +90,7 @@ export function DockIcon({
   const scaleSize = useSpring(sizeTransform, { mass: 0.1, stiffness: 150, damping: 12 });
 
   const isExternal = href.startsWith("http");
-  const linkClassName =
-    "flex h-full w-full items-center justify-center rounded-full text-ink transition-colors duration-150 hover:bg-pink";
+  const linkClassName = "flex h-full w-full cursor-pointer items-center justify-center rounded-full text-ink";
 
   return (
     <motion.div
