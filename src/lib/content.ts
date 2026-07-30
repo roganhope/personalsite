@@ -63,7 +63,7 @@ export const projects: Project[] = [
   {
     label: "01 / Product",
     title: "Sehr Eats",
-    copy: "A welcoming recipe platform for discovering and sharing delicious meals.",
+    copy: "My personal Armenian food blog for sharing and preserving Armenian and Mediterranean culture.",
     href: "https://sehreats.com/",
     image: "/sehr-eats.png",
   },
