@@ -22,7 +22,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: TAGLINE_DELAY, duration: FADE_DURATION }}
           >
-            I work in product management and engineering.
+            I work in Product Management, Engineering and AI.
           </motion.p>
           <motion.div
             className="inline-block"
