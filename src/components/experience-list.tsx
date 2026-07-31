@@ -52,7 +52,7 @@ export default function ExperienceList() {
       collapsible
       value={openValue}
       onValueChange={handleValueChange}
-      className="mx-auto grid w-[min(100%,800px)] gap-2.5 text-left"
+      className="mx-auto grid w-[min(100%,1000px)] gap-2.5 text-left"
     >
       {roles.map((role, index) => {
         const isOpen = openValue === role.title;

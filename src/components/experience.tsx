@@ -20,7 +20,7 @@ export default function Experience() {
     <Section>
       <Wrap>
         <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
-          The résumé version
+          Relevant work history
         </p>
         <ExperienceList />
         <p className="mt-8">

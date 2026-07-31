@@ -18,11 +18,11 @@ export default function SiteHeader() {
           </Link>
           <div className="flex gap-5.5 text-[.82rem] font-bold tracking-[.08em] uppercase max-[700px]:gap-3 max-[700px]:text-[.7rem]">
             <Link
-              href="/#work"
-              onClick={() => posthog.capture("nav_link_clicked", { link: "work" })}
+              href="/#portfolio"
+              onClick={() => posthog.capture("nav_link_clicked", { link: "portfolio" })}
               className="hover:text-pink"
             >
-              Work
+              Portfolio
             </Link>
             <Link
               href="/#contact"
