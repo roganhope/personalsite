@@ -1,11 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { motion } from "motion/react";
 import posthog from "posthog-js";
 import Button from "./button";
 import Wrap from "./wrap";
 import HeroHeading, { HERO_HEADING_DONE_MS } from "./hero-heading";
+import HeroPortrait from "./hero-portrait";
 
 const GAP_AFTER_HEADING = 0.3;
 const FADE_DURATION = 0.4;
@@ -18,12 +18,11 @@ export default function Hero() {
       <Wrap className="grid min-h-[calc(100vh-84px)] place-items-center px-0 py-17.5 pb-25 text-center">
         <div>
           <motion.div
-            className="relative mx-auto mb-6 h-40 w-40 overflow-hidden rounded-full border border-line"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: FADE_DURATION }}
           >
-            <Image src="/hope-hero-bw.webp" alt="Hope smiling" fill sizes="160px" className="object-cover" />
+            <HeroPortrait className="mx-auto mb-6" />
           </motion.div>
           <HeroHeading />
           <motion.p
