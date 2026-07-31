@@ -22,6 +22,8 @@ export type Role = {
   years: string;
   bullets: Bullet[];
   funFact: string;
+  /** Turns a substring of funFact into a link, if present. */
+  funFactLink?: { text: string; href: string };
 };
 
 export type SkillCategory = {
@@ -164,6 +166,10 @@ export const roles: Role[] = [
     ],
     funFact:
       "I grew up in a Motorcycle Dealership family and would travel across the East Coast for shows from the age of 8, and learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitter, where you will find me at the age of 3 sitting on a motorcycle.",
+    funFactLink: {
+      text: "about page on Bikers Outfitter",
+      href: "https://bikersoutfitter.com/pages/about",
+    },
   },
 ];
 
