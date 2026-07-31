@@ -1,3 +1,6 @@
+"use client";
+
+import posthog from "posthog-js";
 import { GitHubIcon, LinkedInIcon } from "./icons";
 import Wrap from "./wrap";
 
@@ -10,6 +13,7 @@ export default function SiteFooter() {
             href="https://www.linkedin.com/in/hoperogan/"
             target="_blank"
             rel="noreferrer"
+            onClick={() => posthog.capture("linkedin_clicked")}
             className="inline-flex items-center gap-1.75 hover:text-pink"
           >
             <LinkedInIcon />
@@ -19,6 +23,7 @@ export default function SiteFooter() {
             href="https://github.com/roganhope"
             target="_blank"
             rel="noreferrer"
+            onClick={() => posthog.capture("github_clicked")}
             className="inline-flex items-center gap-1.75 hover:text-pink"
           >
             <GitHubIcon />

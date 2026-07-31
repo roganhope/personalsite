@@ -1,7 +1,8 @@
 "use client";
 
 import { useForm, ValidationError } from "@formspree/react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { Confetti } from "./confetti";
 
 const fieldClassName =
@@ -13,10 +14,28 @@ export default function ContactForm() {
   const [state, handleSubmit] = useForm("mqerjgvp");
   const formRef = useRef<HTMLFormElement>(null);
   const [formHeight, setFormHeight] = useState<number>();
+  const submittedFields = useRef<{ name: string; email: string }>({ name: "", email: "" });
 
   useLayoutEffect(() => {
     if (formRef.current) setFormHeight(formRef.current.offsetHeight);
   }, []);
+
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const formData = new FormData(event.currentTarget);
+    submittedFields.current = {
+      name: String(formData.get("name") ?? ""),
+      email: String(formData.get("email") ?? ""),
+    };
+    handleSubmit(event);
+  };
+
+  useEffect(() => {
+    if (state.succeeded) {
+      const { name, email } = submittedFields.current;
+      if (email) posthog.identify(email, { name, email });
+      posthog.capture("contact_form_submitted", { name, email });
+    }
+  }, [state.succeeded]);
 
   if (state.succeeded) {
     return (
@@ -33,7 +52,7 @@ export default function ContactForm() {
   }
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="mx-auto flex max-w-[480px] flex-col gap-5 text-left">
+    <form ref={formRef} onSubmit={onSubmit} className="mx-auto flex max-w-[480px] flex-col gap-5 text-left">
       <div>
         <label htmlFor="name" className={labelClassName}>
           Name

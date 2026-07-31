@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { File, Folder, Tree } from "./magicui/file-tree";
 import Section from "./section";
 import Wrap from "./wrap";
@@ -82,8 +83,19 @@ export default function Skills() {
     return () => observer.disconnect();
   }, []);
 
-  const collapseAll = () => setExpandedItems([]);
+  const collapseAll = () => {
+    posthog.capture("skill_tree_collapse_all_clicked");
+    setExpandedItems([]);
+  };
   const anyExpanded = expandedItems.length > 0;
+
+  const handleExpandedItemsChange = (next: string[]) => {
+    const expanded = next.find((item) => !expandedItems.includes(item));
+    const collapsed = expandedItems.find((item) => !next.includes(item));
+    if (expanded) posthog.capture("skill_category_toggled", { category: expanded, action: "expand" });
+    if (collapsed) posthog.capture("skill_category_toggled", { category: collapsed, action: "collapse" });
+    setExpandedItems(next);
+  };
 
   return (
     <Section id="skills">
@@ -101,7 +113,7 @@ export default function Skills() {
               Collapse all
             </button>
           )}
-          <Tree sort="none" expandedItems={expandedItems} onExpandedItemsChange={setExpandedItems}>
+          <Tree sort="none" expandedItems={expandedItems} onExpandedItemsChange={handleExpandedItemsChange}>
             {skillCategories.map((category) => (
               <Folder key={category.label} value={category.label} element={category.label}>
                 {category.skills.map((skill) => (
@@ -109,6 +121,7 @@ export default function Skills() {
                     key={`${category.label}/${skill}`}
                     value={`${category.label}/${skill}`}
                     fileIcon={<SkillIcon skill={skill} />}
+                    onClick={() => posthog.capture("skill_clicked", { skill, category: category.label })}
                   >
                     <span>{skill}</span>
                   </File>
