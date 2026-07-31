@@ -47,7 +47,7 @@ export const projects: Project[] = [
   },
   {
     label: "02 / Commerce",
-    title: "Bikers Outfitter",
+    title: "Biker's Outfitter",
     copy: "A high-energy commerce experience for riders, motorcycles, scooters, and parts.",
     href: "https://bikersoutfitter.com/",
     image: "/bikers-outfitter.png",
