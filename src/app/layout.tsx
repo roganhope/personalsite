@@ -10,18 +10,18 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://hoperogan.com"),
-  title: "Hope Elizabeth Rogan",
-  description: "Product Management and Engineering Portfolio for Hope Elizabeth Rogan.",
+  title: "Hope Rogan",
+  description: "Product Management and Engineering Portfolio for Hope E. Rogan.",
   openGraph: {
-    title: "Hope Elizabeth Rogan",
-    description: "Product Management and Engineering Portfolio for Hope Elizabeth Rogan.",
+    title: "Hope E. Rogan",
+    description: "Product Management and Engineering Portfolio for Hope E. Rogan.",
     url: "https://hoperogan.com",
-    siteName: "Hope Elizabeth Rogan",
+    siteName: "Hope E. Rogan",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hope Elizabeth Rogan",
-    description: "Product Management and Engineering Portfolio for Hope Elizabeth Rogan.",
+    title: "Hope E. Rogan",
+    description: "Product Management and Engineering Portfolio for Hope E. Rogan.",
   },
 };
 

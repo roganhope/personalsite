@@ -6,7 +6,7 @@ import SiteHeader from "@/components/site-header";
 import Wrap from "@/components/wrap";
 
 export const metadata: Metadata = {
-  title: "Page not found — Hope Elizabeth Rogan",
+  title: "Page not found — Hope Rogan",
   robots: { index: false },
 };
 

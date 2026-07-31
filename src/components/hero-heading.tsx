@@ -23,7 +23,7 @@ const UNDERLINE_DELAY = HOPE_LETTERS_DONE + UNDERLINE_GAP;
 const SUBTITLE_DELAY_MS =
   (UNDERLINE_DELAY + UNDERLINE_DURATION + GAP_BEFORE_SUBTITLE) * 1000;
 
-const SUBTITLE_TEXT = "Hope Elizabeth Rogan";
+const SUBTITLE_TEXT = "Hope E. Rogan";
 const SUBTITLE_MS_PER_CHAR = 100; // matches TypingAnimation's default `duration`
 
 // When the subtitle finishes typing, in ms — exported so content that should
