@@ -1,3 +1,6 @@
+"use client";
+
+import posthog from "posthog-js";
 import Button from "./button";
 import ExperienceList from "./experience-list";
 import Section from "./section";
@@ -21,7 +24,11 @@ export default function Experience() {
         </p>
         <ExperienceList />
         <p className="mt-8">
-          <Button href="/resume.pdf" target="_blank">
+          <Button
+            href="/resume.pdf"
+            target="_blank"
+            onClick={() => posthog.capture("resume_clicked")}
+          >
             <ResumeIcon />
             Résumé coming soon ↗
           </Button>

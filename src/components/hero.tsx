@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "motion/react";
+import posthog from "posthog-js";
 import Button from "./button";
 import Wrap from "./wrap";
 import HeroHeading, { HERO_HEADING_DONE_MS } from "./hero-heading";
@@ -30,7 +31,9 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: BUTTON_DELAY, duration: FADE_DURATION }}
           >
-            <Button href="/#contact">Let&apos;s make something ↘</Button>
+            <Button href="/#contact" onClick={() => posthog.capture("hero_cta_clicked")}>
+              Let&apos;s make something ↘
+            </Button>
           </motion.div>
         </div>
       </Wrap>

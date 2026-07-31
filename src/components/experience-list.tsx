@@ -1,10 +1,17 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 import { roles } from "@/lib/content";
 
 export default function ExperienceList() {
   const [openIndex, setOpenIndex] = useState(0);
+
+  const toggleRole = (index: number, isOpen: boolean) => {
+    const role = roles[index];
+    setOpenIndex(isOpen ? -1 : index);
+    posthog.capture("experience_role_toggled", { role: role.title, action: isOpen ? "collapse" : "expand" });
+  };
 
   return (
     <div className="mx-auto grid w-[min(100%,800px)] gap-2.5 text-left">
@@ -15,7 +22,7 @@ export default function ExperienceList() {
             <button
               type="button"
               aria-expanded={isOpen}
-              onClick={() => setOpenIndex(isOpen ? -1 : index)}
+              onClick={() => toggleRole(index, isOpen)}
               className="group grid w-full cursor-pointer grid-cols-[1.5fr_1fr_auto_20px] items-center gap-5 border-0 bg-transparent px-6 py-[23px] text-left text-inherit [font:inherit] max-[700px]:relative max-[700px]:grid-cols-1 max-[700px]:gap-2.5 max-[700px]:pr-[55px]"
             >
               <div>
