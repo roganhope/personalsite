@@ -23,7 +23,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: FADE_DURATION }}
           >
-            <Image src="/hope.webp" alt="Hope smiling, holding a laptop" fill sizes="160px" className="object-cover" />
+            <Image src="/hope-hero-bw.webp" alt="Hope smiling" fill sizes="160px" className="object-cover" />
           </motion.div>
           <HeroHeading />
           <motion.p
