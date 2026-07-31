@@ -1,16 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import posthog from "posthog-js";
 import { roles } from "@/lib/content";
 
 export default function ExperienceList() {
   const [openIndex, setOpenIndex] = useState(0);
+  const itemRefs = useRef<(HTMLElement | null)[]>([]);
+  const shouldReduceMotion = useReducedMotion();
 
   const toggleRole = (index: number, isOpen: boolean) => {
     const role = roles[index];
     setOpenIndex(isOpen ? -1 : index);
     posthog.capture("experience_role_toggled", { role: role.title, action: isOpen ? "collapse" : "expand" });
+    if (!isOpen) {
+      itemRefs.current[index]?.scrollIntoView({ behavior: shouldReduceMotion ? "auto" : "smooth", block: "start" });
+    }
   };
 
   return (
@@ -18,7 +24,15 @@ export default function ExperienceList() {
       {roles.map((role, index) => {
         const isOpen = openIndex === index;
         return (
-          <article key={role.title} className="overflow-hidden rounded-[20px] border border-line bg-white/56">
+          <motion.article
+            key={role.title}
+            layout="position"
+            transition={{ type: "spring", stiffness: 500, damping: 50 }}
+            ref={(el: HTMLElement | null) => {
+              itemRefs.current[index] = el;
+            }}
+            className="overflow-hidden rounded-[20px] border border-line bg-white/56"
+          >
             <button
               type="button"
               aria-expanded={isOpen}
@@ -38,19 +52,25 @@ export default function ExperienceList() {
                 }`}
               />
             </button>
-            <div
+            <motion.div
+              layout
+              initial={false}
+              animate={{
+                height: isOpen ? "auto" : 0,
+                opacity: isOpen ? 1 : 0,
+              }}
+              transition={
+                shouldReduceMotion
+                  ? { duration: 0 }
+                  : {
+                      height: { type: "spring", stiffness: 500, damping: 40 },
+                      opacity: { duration: 0.2 },
+                    }
+              }
               aria-hidden={!isOpen}
-              className={`grid border-t transition-[grid-template-rows_.38s_cubic-bezier(.22,1,.36,1),border-color_.38s_ease] ${
-                isOpen ? "grid-rows-[1fr] border-line" : "grid-rows-[0fr] border-transparent"
-              }`}
+              className={`overflow-hidden border-t ${isOpen ? "border-line" : "border-transparent"}`}
             >
-              <div
-                className={`grid min-h-0 overflow-hidden px-6 transition-[padding_.38s_cubic-bezier(.22,1,.36,1),opacity_.2s_ease,transform_.32s_ease] ${
-                  isOpen
-                    ? "translate-y-0 pt-[22px] pb-[25px] opacity-100"
-                    : "-translate-y-2 pt-0 pb-0 opacity-0"
-                }`}
-              >
+              <div className="px-6 pt-[22px] pb-[25px]">
                 <ul className="m-0 list-disc space-y-2 pl-5 text-[.92rem] text-muted marker:text-pink">
                   {role.bullets.map((bullet, bulletIndex) => (
                     <li key={bulletIndex}>
@@ -64,8 +84,8 @@ export default function ExperienceList() {
                   <em className="text-muted italic">{role.funFact}</em>
                 </p>
               </div>
-            </div>
-          </article>
+            </motion.div>
+          </motion.article>
         );
       })}
     </div>
