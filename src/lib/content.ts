@@ -55,7 +55,7 @@ export const projects: Project[] = [
   {
     label: "03 / Platform",
     title: "The Jade Platform",
-    copy: "Led as lead engineer at Jade to build an options strategy management application for wealth management firms.",
+    copy: "Served as lead engineer at Jade to engineer an options strategy management application for wealth management firms.",
     href: "https://thejadeplatform.com/",
     image: "/jade-platform.png",
   },
@@ -94,7 +94,7 @@ export const roles: Role[] = [
       },
     ],
     funFact:
-      "I didn't know about options trading before starting this role. By the time of my second interview, I learned enough to get the role, and continued to become an expert in trading strategies to contribute professionally to the platform.",
+      "I didn't know enough about options trading before starting this role. By the time of my second interview, I learned enough to get hired and continued to become an expert in trading strategies to contribute professionally to the platform.",
   },
   {
     title: "Full Stack Web Development & Design Teaching Assistant",
@@ -108,15 +108,15 @@ export const roles: Role[] = [
       },
       {
         lead: "Led office hours and facilitated discussions",
-        text: " on an online board, clarifying concepts and troubleshooting coding issues to support student success including topics from database connections, UI improvement and framework support.",
+        text: " on an online board, clarifying concepts and troubleshooting coding issues to support student success including topics from database connections, UI improvement, and framework support.",
       },
       {
         lead: "Operated in a fully remote environment",
-        text: ", showcasing strong self-management, communication, and collaboration skills to drive project success through tools such as Slack, Zoom and Piazza.",
+        text: ", showcasing strong self-management, communication, and collaboration skills to drive project success through tools such as Slack, Zoom, and Piazza.",
       },
     ],
     funFact:
-      "I didn't apply for this role, the instructor personally reached out and offered me the position after I excelled in the course. Thank you to Lisa Diorio, an outstanding instructor who made the experience even more rewarding.",
+      "I didn't apply for this role; the instructor personally reached out and offered me the position after I excelled in the course. Thank you to Lisa Diorio, an outstanding instructor who made the experience even more rewarding.",
   },
   {
     title: "Data Science Intern & Operations Representative",
@@ -130,7 +130,7 @@ export const roles: Role[] = [
       },
       {
         lead: "Coordinated management of a corporate facility",
-        text: " in Cambridge, Massachusetts, oversaw vendors, managing office supplies, administering access control, and supporting overall facility operations.",
+        text: " in Cambridge, Massachusetts, overseeing vendors, managing office supplies, administering access control, and supporting overall facility operations.",
       },
       {
         lead: "Served on the planning committee for a successful 300+ person conference",
