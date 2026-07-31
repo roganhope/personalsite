@@ -61,7 +61,6 @@ const skillIcons: Record<string, string> = {
 
 function SkillIcon({ skill }: { skill: string }) {
   const file = skillIcons[skill];
-  if (!file) return undefined;
   // eslint-disable-next-line @next/next/no-img-element -- small static logo, next/image doesn't optimize local SVGs
   return <img src={`/skill-icons/${file}`} alt="" className="h-4 w-4 shrink-0 object-contain" />;
 }
@@ -120,7 +119,7 @@ export default function Skills() {
                   <File
                     key={`${category.label}/${skill}`}
                     value={`${category.label}/${skill}`}
-                    fileIcon={<SkillIcon skill={skill} />}
+                    fileIcon={skillIcons[skill] ? <SkillIcon skill={skill} /> : undefined}
                     onClick={() => posthog.capture("skill_clicked", { skill, category: category.label })}
                   >
                     <span>{skill}</span>
