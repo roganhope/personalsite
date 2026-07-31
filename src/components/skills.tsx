@@ -13,7 +13,8 @@ const skillIcons: Record<string, string> = {
   Java: "java.svg",
   TypeScript: "typescript.svg",
   JavaScript: "javascript.svg",
-  "HTML/CSS": "html5.svg",
+  HTML5: "html5.svg",
+  CSS3: "css3.svg",
   jQuery: "jquery.svg",
   PHP: "php.svg",
   LaTeX: "latex.svg",
@@ -36,6 +37,7 @@ const skillIcons: Record<string, string> = {
   Supabase: "supabase.svg",
   Vercel: "vercel.svg",
   AWS: "amazonwebservices.svg",
+  OIDC: "openid.svg",
   DynamoDB: "dynamodb.svg",
   Docker: "docker.svg",
   "GitHub Actions": "githubactions.svg",
@@ -63,6 +65,19 @@ function SkillIcon({ skill }: { skill: string }) {
   const file = skillIcons[skill];
   // eslint-disable-next-line @next/next/no-img-element -- small static logo, next/image doesn't optimize local SVGs
   return <img src={`/skill-icons/${file}`} alt="" className="h-4 w-4 shrink-0 object-contain" />;
+}
+
+/** `path` is the folder breadcrumb (category, or "category/group") the skill lives under. */
+function SkillFile({ path, skill }: { path: string; skill: string }) {
+  return (
+    <File
+      value={`${path}/${skill}`}
+      fileIcon={skillIcons[skill] ? <SkillIcon skill={skill} /> : undefined}
+      onClick={() => posthog.capture("skill_clicked", { skill, category: path })}
+    >
+      <span>{skill}</span>
+    </File>
+  );
 }
 
 const TALL_THRESHOLD_PX = 400;
@@ -116,15 +131,18 @@ export default function Skills() {
             {skillCategories.map((category) => (
               <Folder key={category.label} value={category.label} element={category.label}>
                 {category.skills.map((skill) => (
-                  <File
-                    key={`${category.label}/${skill}`}
-                    value={`${category.label}/${skill}`}
-                    fileIcon={skillIcons[skill] ? <SkillIcon skill={skill} /> : undefined}
-                    onClick={() => posthog.capture("skill_clicked", { skill, category: category.label })}
-                  >
-                    <span>{skill}</span>
-                  </File>
+                  <SkillFile key={`${category.label}/${skill}`} path={category.label} skill={skill} />
                 ))}
+                {category.groups?.map((group) => {
+                  const groupPath = `${category.label}/${group.label}`;
+                  return (
+                    <Folder key={groupPath} value={groupPath} element={group.label}>
+                      {group.skills.map((skill) => (
+                        <SkillFile key={`${groupPath}/${skill}`} path={groupPath} skill={skill} />
+                      ))}
+                    </Folder>
+                  );
+                })}
               </Folder>
             ))}
           </Tree>
