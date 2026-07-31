@@ -143,7 +143,7 @@ export const roles: Role[] = [
     title: "Office Manager",
     company: "Bikers Outfitter",
     focus: "",
-    years: "",
+    years: "2017 - 2021",
     bullets: [
       {
         lead: "Contributed across every facet of a family-owned motorcycle and small engine dealership",
