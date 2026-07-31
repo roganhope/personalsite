@@ -26,9 +26,15 @@ export type Role = {
   funFactLink?: { text: string; href: string };
 };
 
+export type SkillGroup = {
+  label: string;
+  skills: string[];
+};
+
 export type SkillCategory = {
   label: string;
   skills: string[];
+  groups?: SkillGroup[];
 };
 
 export const projects: Project[] = [
@@ -176,7 +182,7 @@ export const roles: Role[] = [
 export const skillCategories: SkillCategory[] = [
   {
     label: "Languages",
-    skills: ["Python", "Java", "TypeScript", "JavaScript", "SQL", "HTML/CSS", "jQuery", "PHP", "LaTeX"],
+    skills: ["Python", "Java", "TypeScript", "JavaScript", "SQL", "HTML5", "CSS3", "jQuery", "PHP", "LaTeX"],
   },
   {
     label: "Frameworks",
@@ -184,7 +190,7 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     label: "UI Libraries",
-    skills: ["Bootstrap", "MagicUI", "Tailwind"],
+    skills: ["Bootstrap", "MagicUI", "Tailwind", "React"],
   },
   {
     label: "Tools",
@@ -208,20 +214,12 @@ export const skillCategories: SkillCategory[] = [
   },
   {
     label: "Cloud & DevOps",
-    skills: [
-      "AWS",
-      "Bedrock",
-      "EC2",
-      "IAM",
-      "OIDC",
-      "AWS Secrets",
-      "Lambda",
-      "DynamoDB",
-      "S3",
-      "Docker",
-      "GitHub Actions",
-      "GCP",
-      "Heroku",
+    skills: ["Docker", "GitHub Actions", "GCP", "Heroku"],
+    groups: [
+      {
+        label: "AWS",
+        skills: ["AWS", "Bedrock", "EC2", "IAM", "OIDC", "AWS Secrets", "Lambda", "DynamoDB", "S3"],
+      },
     ],
   },
   {
