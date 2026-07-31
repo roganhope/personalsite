@@ -20,32 +20,37 @@ This version has breaking changes — APIs, conventions, and file structure may 
 4. Before saving over `public/hero.gif`, ask whether to delete the old gif
    or keep it and store the new one under a different filename.
 
-## Syncing skills and links from github.com/roganhope/roganhope
+## Syncing skills and links from github.com/roganhope/resumes
 
-The source of truth for skills and social links lives in the (public)
-`roganhope/roganhope` GitHub profile repo, not in this codebase. When asked
-to update skills or links, fetch the latest data from there rather than
-editing values from memory:
+The source of truth for skills (and, once added, social links) lives in the
+`src/content/` folder of the (private) `roganhope/resumes` GitHub repo, not
+in this codebase. Because the repo is private, use `gh api` rather than
+plain `curl` to fetch files:
 
 ```bash
-curl -s https://raw.githubusercontent.com/roganhope/roganhope/main/skills.json
-curl -s https://raw.githubusercontent.com/roganhope/roganhope/main/links.json
+gh api repos/roganhope/resumes/contents/src/content/skills.json -H "Accept: application/vnd.github.raw"
+gh api repos/roganhope/resumes/contents/src/content/links.json -H "Accept: application/vnd.github.raw"
+gh api repos/roganhope/resumes/contents/src/content/icons --jq '.[].name'
 ```
 
 - **`skills.json`** — array of `{ label, skills: [{ name, icon, logo, color,
   logoColor, include }] }` categories. Maps to `skillCategories` in
   `src/lib/content.ts` (currently just `{ label, skills: string[] }` — only
   `name` values are used today; only include skills where `include` is
-  true). The `icon` filename should exist in `public/skill-icons/` and be
-  wired into the `skillIcons` map in `src/components/skills.tsx` — flag any
-  skill whose icon file is missing so it can be added.
-- **`links.json`** — flat `{ discord, website, linkedin, github, ... }`
-  object of social/profile URLs. Maps to the hardcoded `<a>` tags in
-  `src/components/site-footer.tsx` (currently only LinkedIn and GitHub are
-  present — add/update entries to match, using `src/components/icons.tsx`
-  for icons, adding new icon components if needed).
+  true). The `icon` filename should exist in `public/skill-icons/` — if
+  missing, fetch it from `src/content/icons/` in the resumes repo (e.g. `gh
+  api repos/roganhope/resumes/contents/src/content/icons/<file> -H "Accept:
+  application/vnd.github.raw"`) and wire it into the `skillIcons` map in
+  `src/components/skills.tsx`.
+- **`links.json`** — not present in the resumes repo yet (as of 2026-07-31);
+  the user plans to add it there. Once it exists, treat it as a flat
+  `{ discord, website, linkedin, github, ... }` object of social/profile
+  URLs, mapping to the hardcoded `<a>` tags in `src/components/site-footer.tsx`
+  (currently only LinkedIn and GitHub are present — add/update entries to
+  match, using `src/components/icons.tsx` for icons, adding new icon
+  components if needed). Until it exists, skip links syncing.
 
-When asked to "update skills," "sync links," or similar, pull both files,
-diff them against the current local values, and apply the changes to the
-files above — don't touch `roganhope/roganhope` itself unless explicitly
-asked.
+Only sync when explicitly asked ("update skills," "sync links," or similar)
+— never proactively. Pull the relevant file(s), diff against the current
+local values, and apply the changes to the files above — don't touch
+`roganhope/resumes` itself unless explicitly asked.
