@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "motion/react";
 import posthog from "posthog-js";
 import Button from "./button";
@@ -16,6 +17,14 @@ export default function Hero() {
     <section className="border-t border-line">
       <Wrap className="grid min-h-[calc(100vh-84px)] place-items-center px-0 py-17.5 pb-25 text-center">
         <div>
+          <motion.div
+            className="relative mx-auto mb-6 h-40 w-40 overflow-hidden rounded-full border border-line"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: FADE_DURATION }}
+          >
+            <Image src="/hope.webp" alt="Hope smiling, holding a laptop" fill sizes="160px" className="object-cover" />
+          </motion.div>
           <HeroHeading />
           <motion.p
             className="mx-auto mb-8 max-w-[540px] text-[1.08rem] text-[#3e3d3a]"
