@@ -11,7 +11,7 @@ export default function Projects() {
     <Section id="work">
       <Wrap>
         <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
-          Some of my projects
+          Highlighted projects
         </p>
         <div className="grid grid-cols-3 gap-4 text-left max-[700px]:grid-cols-1">
           {projects.map((project) => {
