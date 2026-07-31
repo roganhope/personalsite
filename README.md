@@ -1,20 +1,14 @@
-# personalsite
+<img src="public/logo/logo.png" alt="Logo" width="80" />
 
-Personal site and blog for hoperogan.com. Currently a "coming soon" placeholder.
+# Hope Rogan Portfolio Website
 
-Built with Next.js (App Router), TypeScript, and Tailwind CSS.
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/React-61DAFB?logo=react&logoColor=black)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
+![Claude](https://img.shields.io/badge/Claude-D97757?logo=claude&logoColor=white)
+![PostHog](https://img.shields.io/badge/PostHog-000000?logo=posthog&logoColor=white)
 
-## Development
+This repository contains the source code for my personal portfolio. Rather than using a template, the site was designed and built from scratch to reflect my approach to software engineering, with an emphasis on reusable components, smooth interactions, accessibility, and performance.
 
-```bash
-npm install
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000).
-
-## Build
-
-```bash
-npm run build
-```
+![Homepage screenshot](public/screenshot.png)
