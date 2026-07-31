@@ -71,10 +71,10 @@ export const projects: Project[] = [
 
 export const roles: Role[] = [
   {
-    title: "Product Manager & Lead Software Engineer",
+    title: "Project Manager & Software Engineer",
     company: "The Jade Platform",
     focus: "",
-    years: "2025 - Now",
+    years: "2025 - 2026",
     bullets: [
       {
         lead: "Led a team of 8 to design and build a B2B SaaS options trading and analytics platform",
@@ -97,7 +97,7 @@ export const roles: Role[] = [
       "I didn't know about options trading before starting this role. By the time of my second interview, I learned enough to get the role, and continued to become an expert in trading strategies to contribute professionally to the platform.",
   },
   {
-    title: "Full Stack Web Design Teaching Assistant",
+    title: "Full Stack Web Development & Design Teaching Assistant",
     company: "Tufts University",
     focus: "",
     years: "2023 - 2024",
@@ -116,10 +116,10 @@ export const roles: Role[] = [
       },
     ],
     funFact:
-      "I didn't apply for this role—the instructor personally reached out and offered me the position after I excelled in the course. Shoutout to Lisa Diorio, an outstanding instructor who made the experience even more rewarding.",
+      "I didn't apply for this role, the instructor personally reached out and offered me the position after I excelled in the course. Thank you to Lisa Diorio, an outstanding instructor who made the experience even more rewarding.",
   },
   {
-    title: "Data Science Intern & Business Professional",
+    title: "Data Science Intern & Operations Representative",
     company: "EQRx",
     focus: "",
     years: "2021 - 2024",
@@ -141,11 +141,12 @@ export const roles: Role[] = [
         text: " to track office traffic, enabling data-driven decisions on parking allocation and employee benefits.",
       },
       {
-        text: "Built a geographic analysis tool using the Google Maps API to assess employee commuting distances, helping HR optimize travel compensation policies.",
+        lead: "Built a geographic analysis tool",
+        text: " using the Google Maps API to assess employee commuting distances, helping HR optimize travel compensation policies.",
       },
     ],
     funFact:
-      "I taught myself how to code during this time due to my interest in it. This was right before AI models became publicly available, and I was coding organically, as one would say.",
+      "I taught myself how to code during this time due to my interest in it, using free resources online. This was right before popular AI models became publicly available, and I was coding directly, learning about syntax, data structures and more.",
   },
   {
     title: "Office Manager",
@@ -171,9 +172,9 @@ export const roles: Role[] = [
       },
     ],
     funFact:
-      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for shows from the age of 8, and learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitter, where you will find me at the age of 3 sitting on a motorcycle.",
+      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for trade shows from the age of eight and worked there throughout high school and college. I learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitters, where you will find me at the age of three sitting on a motorcycle.",
     funFactLink: {
-      text: "about page on Bikers Outfitter",
+      text: "about page on Bikers Outfitters",
       href: "https://bikersoutfitter.com/pages/about",
     },
   },
