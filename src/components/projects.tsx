@@ -8,7 +8,7 @@ import { projects } from "@/lib/content";
 
 export default function Projects() {
   return (
-    <Section id="work">
+    <Section id="portfolio">
       <Wrap>
         <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
           Highlighted projects
@@ -44,9 +44,9 @@ export default function Projects() {
                   target={external ? "_blank" : undefined}
                   rel={external ? "noreferrer" : undefined}
                   onClick={() => posthog.capture("project_link_clicked", { project: project.title, href: project.href })}
-                  className="mt-5 text-[.78rem] font-extrabold tracking-[.06em] uppercase after:absolute after:inset-0 after:content-['']"
+                  className="mt-5 self-end text-[.78rem] font-extrabold tracking-[.06em] uppercase after:absolute after:inset-0 after:content-['']"
                 >
-                  See the work ↗
+                  View ↗
                 </a>
               </article>
             );
