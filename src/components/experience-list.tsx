@@ -3,7 +3,29 @@
 import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import posthog from "posthog-js";
-import { roles } from "@/lib/content";
+import { roles, type Role } from "@/lib/content";
+
+function renderFunFact(role: Role) {
+  const { funFact, funFactLink } = role;
+  const linkIndex = funFactLink ? funFact.indexOf(funFactLink.text) : -1;
+  if (!funFactLink || linkIndex === -1) return funFact;
+
+  return (
+    <>
+      {funFact.slice(0, linkIndex)}
+      <a
+        href={funFactLink.href}
+        target="_blank"
+        rel="noreferrer"
+        onClick={() => posthog.capture("fun_fact_link_clicked", { role: role.title, href: funFactLink.href })}
+        className="underline hover:text-pink"
+      >
+        {funFactLink.text}
+      </a>
+      {funFact.slice(linkIndex + funFactLink.text.length)}
+    </>
+  );
+}
 
 export default function ExperienceList() {
   const [openIndex, setOpenIndex] = useState(0);
@@ -81,7 +103,7 @@ export default function ExperienceList() {
                 </ul>
                 <p className="mt-4 pl-5 text-[.92rem]">
                   <span className="font-bold text-pink">Fun Fact: </span>
-                  <em className="text-muted italic">{role.funFact}</em>
+                  <em className="text-muted italic">{renderFunFact(role)}</em>
                 </p>
               </div>
             </motion.div>
