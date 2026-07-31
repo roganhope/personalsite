@@ -172,9 +172,9 @@ export const roles: Role[] = [
       },
     ],
     funFact:
-      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for trade shows from the age of eight and worked there throughout high school and college. I learned the value of hard work and grit. For an easter egg, check out the about page on Bikers Outfitters, where you will find me at the age of three sitting on a motorcycle.",
+      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for trade shows from the age of eight and worked there throughout high school and college. I learned the value of hard work and grit. For an easter egg, check out the about page on Biker's Outfitters, where you will find me at the age of three sitting on a motorcycle.",
     funFactLink: {
-      text: "about page on Bikers Outfitters",
+      text: "about page on Biker's Outfitters",
       href: "https://bikersoutfitter.com/pages/about",
     },
   },
