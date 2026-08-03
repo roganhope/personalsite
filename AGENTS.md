@@ -54,3 +54,10 @@ Only sync when explicitly asked ("update skills," "sync links," or similar)
 — never proactively. Pull the relevant file(s), diff against the current
 local values, and apply the changes to the files above — don't touch
 `roganhope/resumes` itself unless explicitly asked.
+
+## PostHog: traffic source dashboard
+
+Dashboard at https://us.posthog.com/project/535257/dashboard/1945665 tracks
+who is visiting the site and where they're coming from (referrer, UTM source,
+etc.). Created to understand traffic attribution for the redirect/tracking
+work on the `go/[slug]` routes.
