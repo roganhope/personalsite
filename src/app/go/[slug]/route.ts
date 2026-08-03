@@ -5,6 +5,7 @@ const redirects: Record<string, string> = {
   github: "https://github.com/roganhope",
   linkedin: "https://www.linkedin.com/in/hoperogan/",
   "linkedin-from-github": "https://www.linkedin.com/in/hoperogan/",
+  maiscribe: "https://github.com/roganhope/maiscribe",
 };
 
 export async function GET(
