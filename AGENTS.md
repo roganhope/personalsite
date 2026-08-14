@@ -61,3 +61,26 @@ Dashboard at https://us.posthog.com/project/535257/dashboard/1945665 tracks
 who is visiting the site and where they're coming from (referrer, UTM source,
 etc.). Created to understand traffic attribution for the redirect/tracking
 work on the `go/[slug]` routes.
+
+## Tagging a `/go` link with a source and campaign
+
+`/go/<slug>` accepts optional `s` (source) and `c` (campaign) query params,
+recorded as the `source` and `campaign` properties on the `link_click` event:
+
+```
+https://hoperogan.com/go/github?s=resume&c=pogo-full-stack
+https://hoperogan.com/go/linkedin?s=resume&c=acme-staff-eng
+```
+
+`utm_source` / `utm_campaign` work as aliases if the longer form reads better
+somewhere; `s` / `c` win if both are present. Both params are optional — links
+without them keep working and record `null`.
+
+Use one campaign value per resume/application so applications can be told
+apart in PostHog, and keep reusing the same `github` / `linkedin` slugs rather
+than minting a new slug per application (`linkedin-from-github` predates this
+and stays for the already-shared links).
+
+The params are only ever recorded on the PostHog event, never appended to the
+destination — GitHub and LinkedIn don't report their analytics back to us, so
+UTMs on those URLs would do nothing.
