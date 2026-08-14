@@ -84,3 +84,6 @@ and stays for the already-shared links).
 The params are only ever recorded on the PostHog event, never appended to the
 destination — GitHub and LinkedIn don't report their analytics back to us, so
 UTMs on those URLs would do nothing.
+
+`docs/tracked-links.md` is a standalone, copy-pasteable version of these rules
+for handing to another agent that generates the links.
