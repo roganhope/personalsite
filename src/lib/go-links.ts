@@ -73,8 +73,19 @@ export const mediums: Record<string, string> = {
 // posthog-js reads utm_* off the landing pageview by itself. That pageview
 // needs a real browser running JS, which is why it — not the link_click event
 // — is the trustworthy number for traffic arriving here.
-function siteDestination(source: string | null, campaign: string | null) {
-  const url = new URL(destinations.site.url);
+function siteDestination(
+  source: string | null,
+  campaign: string | null,
+  origin?: string
+) {
+  // In development, land on the local site instead of prod so the whole
+  // flow — redirect, attributed pageview, UTM strip — is testable without
+  // deploying.
+  const base =
+    process.env.NODE_ENV === "development" && origin
+      ? origin
+      : destinations.site.url;
+  const url = new URL(base);
 
   if (source) {
     url.searchParams.set("utm_source", source);
@@ -92,8 +103,9 @@ function siteDestination(source: string | null, campaign: string | null) {
 export function resolveDestination(
   slug: string,
   source: string | null,
-  campaign: string | null
+  campaign: string | null,
+  origin?: string
 ) {
-  if (slug === "site") return siteDestination(source, campaign);
+  if (slug === "site") return siteDestination(source, campaign, origin);
   return destinations[slug]?.url ?? null;
 }

@@ -11,7 +11,12 @@ export async function GET(
   const source = attribution(searchParams, "s", "utm_source");
   const campaign = attribution(searchParams, "c", "utm_campaign");
 
-  const destination = resolveDestination(slug, source, campaign);
+  const destination = resolveDestination(
+    slug,
+    source,
+    campaign,
+    request.nextUrl.origin
+  );
 
   if (!destination) {
     return new Response("Not found", { status: 404 });
