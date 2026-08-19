@@ -14,6 +14,14 @@ export function DiscordIcon() {
   );
 }
 
+export function EmailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[15px] w-[15px] fill-current">
+      <path d="M3.5 5h17c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-17A1.5 1.5 0 0 1 2 17.5v-11C2 5.67 2.67 5 3.5 5zm.85 2 7.65 5.36L19.65 7H4.35zM20 8.42l-7.43 5.2a1 1 0 0 1-1.14 0L4 8.42V17h16V8.42z" />
+    </svg>
+  );
+}
+
 /** Stroked outline icons for the theme switch, sized to match the social glyphs above. */
 const strokeProps = {
   viewBox: "0 0 24 24",

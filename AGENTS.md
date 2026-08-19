@@ -83,9 +83,11 @@ gh api repos/roganhope/resumes/contents/src/content/icons --jq '.[].name'
   the user plans to add it there. Once it exists, treat it as a flat
   `{ discord, website, linkedin, github, ... }` object of social/profile
   URLs, mapping to the hardcoded `<a>` tags in `src/components/site-footer.tsx`
-  (currently only LinkedIn and GitHub are present — add/update entries to
+  (currently email, LinkedIn, GitHub, and Discord — add/update entries to
   match, using `src/components/icons.tsx` for icons, adding new icon
-  components if needed). Until it exists, skip links syncing.
+  components if needed). The email address itself is the `EMAIL` constant in
+  `src/lib/content.ts`, not a literal in the footer. Until `links.json` exists,
+  skip links syncing.
 
 Only sync when explicitly asked ("update skills," "sync links," or similar)
 — never proactively. Pull the relevant file(s), diff against the current
