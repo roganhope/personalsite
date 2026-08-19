@@ -4,6 +4,43 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+## Colors and dark mode
+
+Every color on the site comes from a custom property in `src/app/globals.css`.
+`:root` holds the light values, `[data-theme="dark"]` overrides them, and
+`@theme inline` re-exposes each one as a Tailwind utility — so `bg-surface`,
+`text-eyebrow`, `shadow-card` and friends retint themselves when the attribute
+flips. **Don't put a raw hex or a stock Tailwind palette color in a component**;
+add a token pair instead, or the element will be stuck in one theme.
+
+Tokens beyond the obvious `ink` / `paper` / `muted` / `line` / `pink`:
+
+- `surface` (translucent card fill, lets the animated grid through),
+  `surface-solid` (opaque — inputs, tables), `surface-sunken` (image wells),
+  `surface-hover`, `tint` (whole-section wash)
+- `eyebrow` (the uppercase section labels), `body` (the hero paragraph)
+- `line-strong` (hover borders), `grid-line` (`AnimatedGrid`'s hairlines)
+- `footer` / `footer-ink` — the footer keeps its own pair so it stays a distinct
+  bar instead of blending into the page in dark mode
+- `on-accent` — text on a pink fill; stays dark in both themes
+- `shadow-card` / `shadow-card-hover`
+
+Anything sitting on `bg-ink` should use `text-paper`, not `text-white`: both
+tokens invert, so the pairing stays legible in either theme.
+
+The visitor's preference is `system` (the default), `light`, or `dark`, stored
+in `localStorage.theme`. Two places resolve it to a concrete `data-theme` on
+`<html>` and **must be kept in step**: the inline pre-paint script in
+`src/app/layout.tsx` (which runs before the first paint, so there's no flash)
+and `resolveTheme` in `src/components/theme-toggle.tsx`. The toggle itself is
+the three-way pill in the footer; it reads through `useSyncExternalStore`, so
+it also picks up changes made in another tab. Because resolution is script-
+driven, a visitor with JS disabled always gets the light theme.
+
+Flat-black logos in `public/skill-icons/` would vanish on a dark card, so
+`monochromeIcons` in `src/components/skills.tsx` lists the ones that get
+`dark:invert`. Add to that set when a new icon has no color of its own.
+
 ## Regenerating the hero gif
 
 `public/hero.gif` is a recording of the hero intro animation (heading typing
@@ -46,9 +83,11 @@ gh api repos/roganhope/resumes/contents/src/content/icons --jq '.[].name'
   the user plans to add it there. Once it exists, treat it as a flat
   `{ discord, website, linkedin, github, ... }` object of social/profile
   URLs, mapping to the hardcoded `<a>` tags in `src/components/site-footer.tsx`
-  (currently only LinkedIn and GitHub are present — add/update entries to
+  (currently email, LinkedIn, GitHub, and Discord — add/update entries to
   match, using `src/components/icons.tsx` for icons, adding new icon
-  components if needed). Until it exists, skip links syncing.
+  components if needed). The email address itself is the `EMAIL` constant in
+  `src/lib/content.ts`, not a literal in the footer. Until `links.json` exists,
+  skip links syncing.
 
 Only sync when explicitly asked ("update skills," "sync links," or similar)
 — never proactively. Pull the relevant file(s), diff against the current

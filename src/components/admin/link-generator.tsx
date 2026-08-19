@@ -71,7 +71,7 @@ function LinkRow({ label, url }: { label: string; url: string }) {
   return (
     <div>
       <p className={labelClassName}>{label}</p>
-      <div className="flex items-center gap-3 rounded-lg border border-line bg-white px-4 py-3">
+      <div className="flex items-center gap-3 rounded-lg border border-line bg-surface-solid px-4 py-3">
         <code className="min-w-0 flex-1 text-left font-mono text-[.75rem] break-all text-ink">
           {url}
         </code>
@@ -225,7 +225,7 @@ export default function LinkGenerator() {
               clear
             </button>
           </div>
-          <div className="overflow-x-auto rounded-lg border border-line bg-white">
+          <div className="overflow-x-auto rounded-lg border border-line bg-surface-solid">
             <table className="w-full border-collapse text-[.8rem]">
               <thead>
                 <tr>

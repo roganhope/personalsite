@@ -4,8 +4,9 @@ import { useCallback, useEffect, useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue } from "motion/react";
 
 /**
- * Spotlight-border card (adapted from magicui.design's MagicCard) trimmed to
- * this site's single light theme — no next-themes/orb mode needed.
+ * Spotlight-border card (adapted from magicui.design's MagicCard). The upstream
+ * next-themes/orb mode is dropped — the gradient reads off this site's color
+ * tokens, so it follows the theme on its own.
  */
 export default function MagicCard({
   children,
@@ -71,7 +72,7 @@ export default function MagicCard({
         `,
       }}
     >
-      <div className="absolute inset-px z-20 rounded-[inherit] bg-white" />
+      <div className="absolute inset-px z-20 rounded-[inherit] bg-surface-solid" />
       <motion.div
         className="pointer-events-none absolute inset-px z-30 rounded-[inherit] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{

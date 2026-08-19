@@ -26,7 +26,7 @@ export default function Hero() {
           </motion.div>
           <HeroHeading />
           <motion.p
-            className="mx-auto mb-8 max-w-[540px] text-[1.08rem] text-[#3e3d3a]"
+            className="mx-auto mb-8 max-w-[540px] text-[1.08rem] text-body"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: TAGLINE_DELAY, duration: FADE_DURATION }}

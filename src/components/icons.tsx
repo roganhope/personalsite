@@ -14,6 +14,52 @@ export function DiscordIcon() {
   );
 }
 
+export function EmailIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[15px] w-[15px] fill-current">
+      <path d="M3.5 5h17c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-17A1.5 1.5 0 0 1 2 17.5v-11C2 5.67 2.67 5 3.5 5zm.85 2 7.65 5.36L19.65 7H4.35zM20 8.42l-7.43 5.2a1 1 0 0 1-1.14 0L4 8.42V17h16V8.42z" />
+    </svg>
+  );
+}
+
+/** Stroked outline icons for the theme switch, sized to match the social glyphs above. */
+const strokeProps = {
+  viewBox: "0 0 24 24",
+  "aria-hidden": true,
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  className: "h-[15px] w-[15px]",
+} as const;
+
+export function MonitorIcon() {
+  return (
+    <svg {...strokeProps}>
+      <rect x="2" y="4" width="20" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4" />
+    </svg>
+  );
+}
+
+export function SunIcon() {
+  return (
+    <svg {...strokeProps}>
+      <circle cx="12" cy="12" r="4.25" />
+      <path d="M12 2v2.5M12 19.5V22M4.22 4.22l1.77 1.77M18.01 18.01l1.77 1.77M2 12h2.5M19.5 12H22M4.22 19.78l1.77-1.77M18.01 5.99l1.77-1.77" />
+    </svg>
+  );
+}
+
+export function MoonIcon() {
+  return (
+    <svg {...strokeProps}>
+      <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z" />
+    </svg>
+  );
+}
+
 export function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[15px] w-[15px] fill-current">

@@ -1,15 +1,28 @@
 "use client";
 
 import posthog from "posthog-js";
-import { DiscordIcon, GitHubIcon, LinkedInIcon } from "./icons";
+import { DiscordIcon, EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
+import ThemeToggle from "./theme-toggle";
 import Wrap from "./wrap";
+import { EMAIL } from "@/lib/content";
 
 export default function SiteFooter() {
   return (
-    <footer className="relative z-10 border-t-[3px] border-pink bg-ink py-7.5 text-white">
-      <Wrap className="flex items-center justify-between gap-4.5 text-[.8rem] max-[700px]:flex-col">
-        <p>&copy; {new Date().getFullYear()} Hope Rogan</p>
-        <div className="flex gap-4.5 font-bold">
+    <footer className="relative z-10 border-t-[3px] border-pink bg-footer py-7.5 text-footer-ink">
+      {/* Stacks at 820px rather than 700px: the email makes a fourth link, and the
+          single row gets too tight to hold together much below that. */}
+      <Wrap className="flex items-center justify-between gap-4.5 text-[.8rem] max-[820px]:flex-col">
+        <p className="whitespace-nowrap">&copy; {new Date().getFullYear()} Hope Rogan</p>
+        <ThemeToggle />
+        <div className="flex flex-wrap justify-center gap-x-4.5 gap-y-2 font-bold">
+          <a
+            href={`mailto:${EMAIL}`}
+            onClick={() => posthog.capture("email_clicked")}
+            className="inline-flex items-center gap-1.75 hover:text-pink"
+          >
+            <EmailIcon />
+            {EMAIL}
+          </a>
           <a
             href="https://www.linkedin.com/in/hoperogan/"
             target="_blank"

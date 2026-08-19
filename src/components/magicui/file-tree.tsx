@@ -183,7 +183,7 @@ Tree.displayName = "Tree";
 const TreeIndicator = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("absolute top-0 left-1.5 h-full w-px rounded-md bg-line py-3 duration-300 ease-in-out hover:bg-[#d2cdcf]", className)}
+    className={cn("absolute top-0 left-1.5 h-full w-px rounded-md bg-line py-3 duration-300 ease-in-out hover:bg-line-strong", className)}
     {...props}
   />
 ));
@@ -208,7 +208,7 @@ const Folder = forwardRef<HTMLDivElement, FolderProps & React.HTMLAttributes<HTM
           className={cn(
             "flex items-center gap-1.5 rounded-md px-1.5 py-1 text-[.92rem] font-bold",
             isSelectable ? "cursor-pointer" : "cursor-not-allowed opacity-50",
-            isSelected && isSelectable && "bg-[#f2f0f1]",
+            isSelected && isSelectable && "bg-surface-hover",
             className
           )}
           disabled={!isSelectable}
@@ -252,7 +252,7 @@ const File = forwardRef<
       disabled={!isSelectable}
       className={cn(
         "flex w-fit items-center gap-1.5 rounded-md px-1.5 py-1 text-[.88rem] text-muted duration-200 ease-in-out",
-        isSelected && isSelectable && "bg-[#f2f0f1] text-ink",
+        isSelected && isSelectable && "bg-surface-hover text-ink",
         isSelectable ? "cursor-pointer hover:text-ink" : "cursor-not-allowed opacity-50",
         className
       )}

@@ -8,7 +8,7 @@ export default function Mission() {
       <Wrap>
         <div className="flex flex-col items-center gap-10 text-center max-[700px]:gap-8 min-[700px]:flex-row min-[700px]:text-left">
           <div className="min-[700px]:flex-1">
-            <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">My mission</p>
+            <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-eyebrow uppercase">My mission</p>
             <h2 className="mb-10.5 text-[clamp(2.25rem,5vw,4.15rem)] leading-[.98] font-bold tracking-[-.07em] max-[700px]:mx-auto max-[700px]:max-w-[680px]">
               If you can dream it,
               <br />
@@ -22,7 +22,7 @@ export default function Mission() {
               </strong>
             </p>
           </div>
-          <div className="relative aspect-[3474/2828] w-full max-w-[420px] shrink-0 overflow-hidden rounded-[20px] border border-line bg-[#f2eff0] min-[700px]:w-[380px]">
+          <div className="relative aspect-[3474/2828] w-full max-w-[420px] shrink-0 overflow-hidden rounded-[20px] border border-line bg-surface-sunken min-[700px]:w-[380px]">
             <Image
               src="/hope.webp"
               alt="Hope smiling, holding a laptop"

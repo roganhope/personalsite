@@ -1,12 +1,76 @@
 @import "tailwindcss";
 
-@theme {
-  --color-ink: #171516;
-  --color-paper: #fff;
-  --color-muted: #787274;
-  --color-line: #e2dfe0;
-  --color-pink: #ff3b8d;
+/*
+ * Dark mode is driven by a `data-theme` attribute on <html>, stamped in before
+ * first paint by the inline script in `app/layout.tsx`. The attribute is always
+ * resolved to "light" or "dark" — the visitor's three-way preference
+ * (system/light/dark) lives in localStorage and is resolved by that script and
+ * by `components/theme-toggle.tsx`.
+ */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
+:root {
+  color-scheme: light;
+
+  --paper: #ffffff;
+  --ink: #171516;
+  --muted: #787274;
+  --line: #e2dfe0;
+  --line-strong: #d2cdcf;
+  --pink: #ff3b8d;
+  /* Text sitting on a pink fill — stays dark in both themes. */
+  --on-accent: #171516;
+
+  /* Card fill: translucent so the animated grid reads through it. */
+  --surface: rgb(255 255 255 / 0.56);
+  --surface-solid: #ffffff;
+  --surface-sunken: #f2eff0;
+  --surface-hover: #f2f0f1;
+  /* Whole-section wash, subtler than a card. */
+  --tint: rgb(255 255 255 / 0.3);
+
+  --eyebrow: #62605c;
+  --body: #3e3d3a;
+
+  --footer: #171516;
+  --footer-ink: #ffffff;
+
+  --grid-line: rgb(23 21 22 / 0.11);
+
+  --card-shadow: 0 8px 24px rgb(23 21 22 / 0.05);
+  --card-shadow-hover: 0 14px 30px rgb(23 21 22 / 0.09);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #171516;
+  --ink: #f2eff0;
+  --muted: #9b9497;
+  --line: #322f30;
+  --line-strong: #454142;
+  --pink: #ff3b8d;
+  --on-accent: #171516;
+
+  --surface: rgb(38 35 37 / 0.72);
+  --surface-solid: #201e1f;
+  --surface-sunken: #131112;
+  --surface-hover: #2a2728;
+  --tint: rgb(255 255 255 / 0.03);
+
+  --eyebrow: #a8a2a4;
+  --body: #ccc6c8;
+
+  --footer: #201e1f;
+  --footer-ink: #f2eff0;
+
+  --grid-line: rgb(242 239 240 / 0.09);
+
+  --card-shadow: 0 8px 24px rgb(0 0 0 / 0.45);
+  --card-shadow-hover: 0 14px 30px rgb(0 0 0 / 0.6);
+}
+
+@theme {
   --animate-grid-pulse: grid-pulse 11s ease-in-out infinite;
   --animate-blink-cursor: blink-cursor 1s step-end infinite;
   --animate-accordion-down: accordion-down 0.2s ease-out;
@@ -53,6 +117,35 @@
   }
 }
 
+/*
+ * `inline` keeps the utilities pointing at the custom properties rather than
+ * copying their values, so flipping `data-theme` retints the whole site.
+ */
 @theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-pink: var(--pink);
+  --color-on-accent: var(--on-accent);
+
+  --color-surface: var(--surface);
+  --color-surface-solid: var(--surface-solid);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-hover: var(--surface-hover);
+  --color-tint: var(--tint);
+
+  --color-eyebrow: var(--eyebrow);
+  --color-body: var(--body);
+
+  --color-footer: var(--footer);
+  --color-footer-ink: var(--footer-ink);
+
+  --color-grid-line: var(--grid-line);
+
+  --shadow-card: var(--card-shadow);
+  --shadow-card-hover: var(--card-shadow-hover);
+
   --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
 }

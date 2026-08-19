@@ -41,7 +41,7 @@ function ReviewerPhoto({ review }: { review: Review }) {
     .slice(0, 2)
     .join("");
   return (
-    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line bg-[#f2eff0] text-[.85rem] font-extrabold text-muted">
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-line bg-surface-sunken text-[.85rem] font-extrabold text-muted">
       {initials}
     </div>
   );
@@ -49,7 +49,7 @@ function ReviewerPhoto({ review }: { review: Review }) {
 
 function SourcePill({ review }: { review: Review }) {
   const linkedin = review.source === "linkedin";
-  const pillClassName = `inline-flex shrink-0 items-center rounded-full border border-line bg-white px-2.5 py-1 ${
+  const pillClassName = `inline-flex shrink-0 items-center rounded-full border border-line bg-surface-solid px-2.5 py-1 ${
     linkedin ? "text-[#0a66c2]" : "text-[.68rem] font-[850] tracking-[.08em] text-muted uppercase"
   }`;
   const label = linkedin ? <LinkedInIcon /> : "Direct";
@@ -78,7 +78,7 @@ function ReviewCard({ review }: { review: Review }) {
   };
 
   return (
-    <article className="flex flex-col rounded-[20px] border border-line bg-white/56 p-6 text-left shadow-[0_8px_24px_rgba(23,21,22,.05)]">
+    <article className="flex flex-col rounded-[20px] border border-line bg-surface p-6 text-left shadow-card">
       <div className="flex items-start gap-3.5">
         <ReviewerPhoto review={review} />
         <div className="min-w-0 flex-1">
@@ -112,7 +112,7 @@ export default function Reviews() {
   return (
     <Section id="reviews">
       <Wrap>
-        <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
+        <p className="m-0 mb-3 text-[.72rem] font-[850] tracking-[.13em] text-eyebrow uppercase">
           What people say
         </p>
         <div className="grid grid-cols-2 gap-4 max-[700px]:grid-cols-1">

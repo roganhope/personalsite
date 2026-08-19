@@ -19,7 +19,7 @@ export default function Experience() {
   return (
     <Section>
       <Wrap>
-        <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-[#62605c] uppercase">
+        <p className="m-0 mb-8 text-[.72rem] font-[850] tracking-[.13em] text-eyebrow uppercase">
           Relevant work history
         </p>
         <ExperienceList />

@@ -12,7 +12,7 @@ function LinkTable({ label, rows }: { label: string; rows: Row[] }) {
   return (
     <div>
       <p className={labelClassName}>{label}</p>
-      <div className="overflow-x-auto rounded-lg border border-line bg-white">
+      <div className="overflow-x-auto rounded-lg border border-line bg-surface-solid">
         <table className="w-full border-collapse text-[.8rem]">
           <thead>
             <tr>
