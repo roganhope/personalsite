@@ -26,6 +26,22 @@ export type Role = {
   funFactLink?: { text: string; href: string };
 };
 
+export type Review = {
+  name: string;
+  /** Their LinkedIn headline (or role, for direct reviews). */
+  title: string;
+  /** How we worked together — shown with the date under the quote. */
+  relationship: string;
+  date: string;
+  quote: string;
+  /** Exact substring of quote rendered bold as the pull-quote. */
+  highlight?: string;
+  /** Path under public/; an initials circle is shown when absent. */
+  photo?: string;
+  profileUrl?: string;
+  source: "linkedin" | "direct";
+};
+
 export type SkillGroup = {
   label: string;
   skills: string[];
@@ -247,6 +263,33 @@ export const skillCategories: SkillCategory[] = [
   {
     label: "Libraries & Data",
     skills: ["pandas", "PostHog", "NumPy", "Matplotlib", "Seaborn", "Pytest"],
+  },
+];
+
+export const reviews: Review[] = [
+  {
+    name: "Jeffrey Breen",
+    title: "Technology investor; analytics and AI specialist; hands-on data geek at heart",
+    relationship: "Senior to Hope at Jade",
+    date: "Jul 2026",
+    quote:
+      "Hope was instrumental in building and launching the Jade Platform, an integrated options platform to help RIAs and other wealth managers turn their clients’ stock portfolios into actively managed sources of income with better risk controls. To focus only on her success herding the proverbial cats around Product would risk underselling her technical contributions. I can’t think of a single part of the platform she wasn’t hands-on with, right down to AWS infrastructure work such as wiring up Claude Code through Bedrock for the whole team to use — and then using it to prototype a chatbot interface. Her technical experience is matched by a disciplined MVP orientation and a relentless commitment to shipping: she is not afraid to cut scope to what customers actually need to get working software into customers’ hands rather than gold-plating in a vacuum.",
+    highlight: "instrumental in building and launching the Jade Platform",
+    photo: "/reviews/jeffrey-breen.jpg",
+    profileUrl: "https://www.linkedin.com/in/jeffreybreen/",
+    source: "linkedin",
+  },
+  {
+    name: "Lee Crawford",
+    title: "Creating the future of Insurtech solutions",
+    relationship: "Advisor to Jade",
+    date: "Jul 2026",
+    quote:
+      "Hope is the ideal high-impact startup engineer. As an advisor to Jade, I watched her consistently go above and beyond her core product/engineering responsibilities. She was adept at juggling project timelines, refining product requirements, and jumping into lead design efforts. Hope did whatever it took to ensure things were done — and done exceptionally well. Her ambition, versatility, and technical talent make her an invaluable asset to any fast-growing team.",
+    highlight: "the ideal high-impact startup engineer",
+    photo: "/reviews/lee-crawford.jpg",
+    profileUrl: "https://www.linkedin.com/in/lecrawford/",
+    source: "linkedin",
   },
 ];
 
