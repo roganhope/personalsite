@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import posthog from "posthog-js";
-import ContactForm from "./contact-form";
+import Link from "next/link";
 import { LinkedInIcon } from "./icons";
 import Section from "./section";
 import Wrap from "./wrap";
@@ -110,26 +110,14 @@ function ReviewCard({ review }: { review: Review }) {
 }
 
 function FeedbackPrompt() {
-  const [open, setOpen] = useState(false);
-
-  if (open) {
-    return (
-      <div className="mt-6 rounded-[20px] border border-line bg-white/56 p-6 text-left">
-        <ContactForm />
-      </div>
-    );
-  }
   return (
-    <button
-      type="button"
-      onClick={() => {
-        posthog.capture("review_feedback_clicked");
-        setOpen(true);
-      }}
-      className="mt-6 text-[.85rem] font-bold text-muted transition-colors duration-150 hover:text-pink"
+    <Link
+      href="/#contact"
+      onClick={() => posthog.capture("review_feedback_clicked")}
+      className="mt-6 inline-block text-[.85rem] font-bold text-muted transition-colors duration-150 hover:text-pink"
     >
       Want to share your feedback?
-    </button>
+    </Link>
   );
 }
 
