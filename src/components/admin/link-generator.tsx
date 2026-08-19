@@ -137,12 +137,17 @@ export default function LinkGenerator() {
           <label htmlFor="destination" className={labelClassName}>
             Destination
           </label>
-          <select id="destination" name="destination" className={fieldClassName}>
+          <select
+            id="destination"
+            name="destination"
+            defaultValue="site"
+            className={fieldClassName}
+          >
             {Object.entries(destinations)
               .filter(([, entry]) => !entry.legacy)
               .map(([slug]) => (
                 <option key={slug} value={slug}>
-                  {slug}
+                  {slug === "site" ? "hoperogan.com" : slug}
                 </option>
               ))}
           </select>
