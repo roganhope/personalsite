@@ -83,6 +83,13 @@ export const projects: Project[] = [
     image: "/maiscribe.png",
     fit: "contain",
   },
+  {
+    label: "05 / Web App",
+    title: "Find a Time",
+    copy: "A public group scheduling app. Still in beta release, with more features coming soon.",
+    href: "https://findatime.tech/",
+    image: "/findatimetech.png",
+  },
 ];
 
 export const roles: Role[] = [
