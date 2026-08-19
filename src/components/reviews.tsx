@@ -3,8 +3,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import posthog from "posthog-js";
+import ContactForm from "./contact-form";
 import { LinkedInIcon } from "./icons";
-import ReviewForm from "./review-form";
 import Section from "./section";
 import Wrap from "./wrap";
 import { reviews, type Review } from "@/lib/content";
@@ -50,22 +50,19 @@ function ReviewerPhoto({ review }: { review: Review }) {
 
 function SourcePill({ review }: { review: Review }) {
   const linkedin = review.source === "linkedin";
-  const pillClassName =
-    "inline-flex shrink-0 items-center gap-1.5 rounded-full border border-line bg-white px-2.5 py-1 text-[.68rem] font-[850] tracking-[.08em] text-muted uppercase";
-  const label = (
-    <>
-      {linkedin && <LinkedInIcon />}
-      {linkedin ? "LinkedIn" : "Direct"}
-    </>
-  );
+  const pillClassName = `inline-flex shrink-0 items-center rounded-full border border-line bg-white px-2.5 py-1 ${
+    linkedin ? "text-[#0a66c2]" : "text-[.68rem] font-[850] tracking-[.08em] text-muted uppercase"
+  }`;
+  const label = linkedin ? <LinkedInIcon /> : "Direct";
   if (!review.profileUrl) return <span className={pillClassName}>{label}</span>;
   return (
     <a
       href={review.profileUrl}
       target="_blank"
       rel="noreferrer"
+      aria-label={linkedin ? `${review.name} on LinkedIn` : undefined}
       onClick={() => posthog.capture("review_source_clicked", { reviewer: review.name, href: review.profileUrl })}
-      className={`${pillClassName} transition-colors duration-150 hover:border-[#0a66c2] hover:text-[#0a66c2]`}
+      className={`${pillClassName} transition-colors duration-150 hover:border-[#0a66c2]`}
     >
       {label}
     </a>
@@ -112,36 +109,27 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-function ShareCard() {
+function FeedbackPrompt() {
   const [open, setOpen] = useState(false);
 
-  const openForm = () => {
-    posthog.capture("review_form_opened");
-    setOpen(true);
-  };
-
+  if (open) {
+    return (
+      <div className="mt-6 rounded-[20px] border border-line bg-white/56 p-6 text-left">
+        <ContactForm />
+      </div>
+    );
+  }
   return (
-    <div className="col-span-full rounded-[20px] border border-dashed border-[#d2cdcf] bg-white/30 p-6 text-left">
-      {open ? (
-        <ReviewForm />
-      ) : (
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p className="m-0 text-[1.05rem] font-bold tracking-[-.03em]">Your words could be here</p>
-            <p className="m-0 mt-1 text-[.9rem] text-muted">
-              Worked with me? I&apos;d love to hear what you&apos;d say.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={openForm}
-            className="inline-flex items-center justify-center rounded-full border border-ink bg-ink px-5 py-3.5 text-[.8rem] font-[850] tracking-[.06em] text-white uppercase shadow-[4px_4px_0_var(--color-pink)] transition-[transform,background,color,box-shadow] duration-[180ms] hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-pink hover:text-ink hover:shadow-[1px_1px_0_var(--color-pink)]"
-          >
-            Share yours
-          </button>
-        </div>
-      )}
-    </div>
+    <button
+      type="button"
+      onClick={() => {
+        posthog.capture("review_feedback_clicked");
+        setOpen(true);
+      }}
+      className="mt-6 text-[.85rem] font-bold text-muted transition-colors duration-150 hover:text-pink"
+    >
+      Want to share your feedback?
+    </button>
   );
 }
 
@@ -156,8 +144,8 @@ export default function Reviews() {
           {reviews.map((review) => (
             <ReviewCard key={review.name} review={review} />
           ))}
-          <ShareCard />
         </div>
+        <FeedbackPrompt />
       </Wrap>
     </Section>
   );
