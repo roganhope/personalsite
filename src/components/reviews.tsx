@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState } from "react";
 import posthog from "posthog-js";
-import Link from "next/link";
 import { LinkedInIcon } from "./icons";
 import Section from "./section";
 import Wrap from "./wrap";
@@ -109,18 +108,6 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-function FeedbackPrompt() {
-  return (
-    <Link
-      href="/#contact"
-      onClick={() => posthog.capture("review_feedback_clicked")}
-      className="mt-6 inline-block text-[.85rem] font-bold text-muted transition-colors duration-150 hover:text-pink"
-    >
-      Want to share your feedback?
-    </Link>
-  );
-}
-
 export default function Reviews() {
   return (
     <Section id="reviews">
@@ -133,7 +120,6 @@ export default function Reviews() {
             <ReviewCard key={review.name} review={review} />
           ))}
         </div>
-        <FeedbackPrompt />
       </Wrap>
     </Section>
   );
