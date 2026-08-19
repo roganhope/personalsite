@@ -84,3 +84,36 @@ and stays for the already-shared links).
 The params are only ever recorded on the PostHog event, never appended to the
 destination — GitHub and LinkedIn don't report their analytics back to us, so
 UTMs on those URLs would do nothing.
+
+### `/go/site` — the one destination that forwards attribution
+
+`site` is a special slug pointing at hoperogan.com itself, and it *does* forward
+the params, as real UTMs:
+
+```
+/go/site?s=email                    -> /?utm_source=email&utm_medium=email
+/go/site?s=resume&c=pogo-full-stack -> /?utm_source=resume&utm_medium=document
+                                        &utm_campaign=pogo-full-stack
+```
+
+Forwarding is right here because posthog-js reads `utm_*` off the landing
+pageview on its own. **Trust that pageview, not the `link_click` event**: a
+pageview needs a real browser running JS, so mail and chat link scanners can't
+inflate it, whereas they can and do hit the redirect.
+
+`utm_medium` is filled in from a small source→medium map in the route so
+PostHog can classify the channel. An unlisted source still works and simply
+arrives with no medium, so new sources need no code change.
+
+Canonical source values — reuse these rather than inventing spellings, so `s`
+doesn't drift into `email` / `email-sig` / `signature`:
+
+`email` (signature) · `linkedin` · `github` · `resume` · `chat` · `apply`
+
+### What the route does with bots and identity
+
+Requests from self-identifying bots are redirected but **not** recorded, since
+mail providers and chat apps fetch every link in a message before a human sees
+it. `link_click` counts are still an upper bound — scanners posing as browsers
+get through. Clicks are attributed to posthog-js's `distinct_id` cookie when the
+visitor has been to the site before, and to a fresh id otherwise.
