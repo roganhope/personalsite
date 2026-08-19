@@ -16,14 +16,14 @@ export async function GET(
   // A mangled token is usually a link an email client truncated or rewrote;
   // land the human somewhere useful and keep the garbage out of analytics.
   if (!payload) {
-    return Response.redirect(destinations.site, 307);
+    return Response.redirect(destinations.site.url, 307);
   }
 
   const { slug, source, campaign } = payload;
   const destination = resolveDestination(slug, source, campaign);
 
   if (!destination) {
-    return Response.redirect(destinations.site, 307);
+    return Response.redirect(destinations.site.url, 307);
   }
 
   return trackAndRedirect(request, { slug, source, campaign, destination });

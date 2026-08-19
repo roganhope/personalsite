@@ -2,15 +2,50 @@
 // Plain data only — no secrets — so the admin panel's client components can
 // import it too. Adding a destination is a one-line entry here; the redirect
 // route and the admin dropdown both pick it up.
-export const destinations: Record<string, string> = {
-  github: "https://github.com/roganhope",
-  linkedin: "https://www.linkedin.com/in/hoperogan/",
-  "linkedin-from-github": "https://www.linkedin.com/in/hoperogan/",
-  maiscribe: "https://github.com/roganhope/maiscribe",
-  // Special-cased in resolveDestination: the one destination that forwards
-  // attribution, since posthog-js reads utm_* off the landing pageview.
-  site: "https://hoperogan.com/",
+export const destinations: Record<
+  string,
+  { url: string; description: string; legacy?: true }
+> = {
+  github: {
+    url: "https://github.com/roganhope",
+    description: "GitHub profile",
+  },
+  linkedin: {
+    url: "https://www.linkedin.com/in/hoperogan/",
+    description: "LinkedIn profile",
+  },
+  "linkedin-from-github": {
+    url: "https://www.linkedin.com/in/hoperogan/",
+    description: "LinkedIn profile — slug for links already shared from GitHub",
+    // Kept alive for already-shared links; don't mint new ones with it.
+    legacy: true,
+  },
+  maiscribe: {
+    url: "https://github.com/roganhope/maiscribe",
+    description: "maiscribe repo",
+  },
+  site: {
+    // Special-cased in resolveDestination: the one destination that forwards
+    // attribution, since posthog-js reads utm_* off the landing pageview.
+    url: "https://hoperogan.com/",
+    description: "This site — forwards source/campaign as real UTMs",
+  },
 };
+
+// Legacy one-off routes that predate /go and stay alive for already-shared
+// links. They have their own route files rather than slugs; listed here only
+// so the admin inventory is complete.
+export const legacyRoutes: {
+  path: string;
+  url: string;
+  description: string;
+}[] = [
+  {
+    path: "/home",
+    url: "https://hoperogan.com/?utm_source=lc&utm_medium=direct&utm_campaign=home",
+    description: "Vanity chat link with hardcoded UTMs (src/app/home/route.ts)",
+  },
+];
 
 // Canonical source values, so `s` doesn't drift into email / email-sig /
 // signature. The admin panel offers these plus a free-text escape hatch.
@@ -39,7 +74,7 @@ export const mediums: Record<string, string> = {
 // needs a real browser running JS, which is why it — not the link_click event
 // — is the trustworthy number for traffic arriving here.
 function siteDestination(source: string | null, campaign: string | null) {
-  const url = new URL(destinations.site);
+  const url = new URL(destinations.site.url);
 
   if (source) {
     url.searchParams.set("utm_source", source);
@@ -60,5 +95,5 @@ export function resolveDestination(
   campaign: string | null
 ) {
   if (slug === "site") return siteDestination(source, campaign);
-  return destinations[slug] ?? null;
+  return destinations[slug]?.url ?? null;
 }

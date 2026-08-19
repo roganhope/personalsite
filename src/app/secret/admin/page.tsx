@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import LinkGenerator from "@/components/admin/link-generator";
 import LoginForm from "@/components/admin/login-form";
+import RegisteredLinks from "@/components/admin/registered-links";
 import Wrap from "@/components/wrap";
 import { SESSION_COOKIE, verifySessionValue } from "@/lib/admin-session";
 
@@ -21,7 +22,14 @@ export default async function AdminPage() {
           <h1 className="mb-10 text-[clamp(1.75rem,4vw,2.5rem)] leading-[.98] font-bold tracking-[-.05em]">
             {authed ? "Link builder" : "Hello?"}
           </h1>
-          {authed ? <LinkGenerator /> : <LoginForm />}
+          {authed ? (
+            <div className="flex flex-col gap-14">
+              <LinkGenerator />
+              <RegisteredLinks />
+            </div>
+          ) : (
+            <LoginForm />
+          )}
         </Wrap>
       </section>
     </main>

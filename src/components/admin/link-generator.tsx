@@ -3,6 +3,7 @@
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { useFormStatus } from "react-dom";
 import { destinations, sources } from "@/lib/go-links";
+import CopyButton from "./copy-button";
 import {
   generateLinks,
   type GenerateState,
@@ -11,6 +12,8 @@ import {
   fieldClassName,
   labelClassName,
   submitClassName,
+  tableCellClassName,
+  tableHeaderClassName,
 } from "./form-styles";
 
 type HistoryEntry = {
@@ -62,25 +65,6 @@ function writeHistory(entries: HistoryEntry[]) {
   } catch {
     // Storage full or unavailable; the generator still works.
   }
-}
-
-function CopyButton({ value }: { value: string }) {
-  const [copied, setCopied] = useState(false);
-
-  return (
-    <button
-      type="button"
-      onClick={() => {
-        navigator.clipboard.writeText(value).then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 1500);
-        });
-      }}
-      className="shrink-0 rounded-full border border-line px-3 py-1.5 text-[.7rem] font-[850] tracking-[.06em] text-muted uppercase transition-colors duration-150 hover:border-pink hover:text-pink"
-    >
-      {copied ? "Copied" : "Copy"}
-    </button>
-  );
 }
 
 function LinkRow({ label, url }: { label: string; url: string }) {
@@ -144,18 +128,23 @@ export default function LinkGenerator() {
   }
 
   return (
-    <div className="mx-auto flex max-w-[560px] flex-col gap-10 text-left">
-      <form action={submitAction} className="flex flex-col gap-5">
+    <div className="mx-auto flex w-full max-w-[820px] flex-col gap-10 text-left">
+      <form
+        action={submitAction}
+        className="mx-auto flex w-full max-w-[560px] flex-col gap-5"
+      >
         <div>
           <label htmlFor="destination" className={labelClassName}>
             Destination
           </label>
           <select id="destination" name="destination" className={fieldClassName}>
-            {Object.keys(destinations).map((slug) => (
-              <option key={slug} value={slug}>
-                {slug}
-              </option>
-            ))}
+            {Object.entries(destinations)
+              .filter(([, entry]) => !entry.legacy)
+              .map(([slug]) => (
+                <option key={slug} value={slug}>
+                  {slug}
+                </option>
+              ))}
           </select>
         </div>
         <div>
@@ -210,7 +199,7 @@ export default function LinkGenerator() {
       </form>
 
       {result.readable && result.sneaky && (
-        <div className="flex flex-col gap-5">
+        <div className="mx-auto flex w-full max-w-[560px] flex-col gap-5">
           <LinkRow label="Readable" url={result.readable} />
           <LinkRow label="Sneaky" url={result.sneaky} />
         </div>
@@ -218,9 +207,10 @@ export default function LinkGenerator() {
 
       {history.length > 0 && (
         <div>
-          <div className="mb-3 flex items-baseline justify-between">
+          <div className="mb-1.5 flex items-baseline justify-between">
             <p className={`${labelClassName} mb-0`}>
-              Recent (this browser only)
+              Minted campaign links — this browser only, there&apos;s no server
+              record
             </p>
             <button
               type="button"
@@ -230,28 +220,45 @@ export default function LinkGenerator() {
               clear
             </button>
           </div>
-          <ul className="flex flex-col gap-3">
-            {history.map((entry) => (
-              <li
-                key={entry.mintedAt + entry.sneaky}
-                className="rounded-lg border border-line bg-white px-4 py-3"
-              >
-                <p className="mb-2 text-[.75rem] text-muted">
-                  {entry.slug}
-                  {entry.source ? ` · ${entry.source}` : ""}
-                  {entry.campaign ? ` · ${entry.campaign}` : ""}
-                  {" · "}
-                  {new Date(entry.mintedAt).toLocaleDateString()}
-                </p>
-                <div className="flex items-center gap-2">
-                  <CopyButton value={entry.readable} />
-                  <span className="text-[.7rem] text-muted">readable</span>
-                  <CopyButton value={entry.sneaky} />
-                  <span className="text-[.7rem] text-muted">sneaky</span>
-                </div>
-              </li>
-            ))}
-          </ul>
+          <div className="overflow-x-auto rounded-lg border border-line bg-white">
+            <table className="w-full border-collapse text-[.8rem]">
+              <thead>
+                <tr>
+                  <th className={tableHeaderClassName}>Campaign</th>
+                  <th className={tableHeaderClassName}>Source</th>
+                  <th className={tableHeaderClassName}>Link</th>
+                  <th className={tableHeaderClassName}>Minted</th>
+                  <th className="px-4 py-3" />
+                </tr>
+              </thead>
+              <tbody>
+                {history.map((entry) => (
+                  <tr key={entry.mintedAt + entry.sneaky}>
+                    <td className={tableCellClassName}>
+                      {entry.campaign ?? "—"}
+                    </td>
+                    <td className={tableCellClassName}>
+                      {entry.source ?? "—"}
+                    </td>
+                    <td className={`${tableCellClassName} font-mono whitespace-nowrap`}>
+                      /go/{entry.slug}
+                    </td>
+                    <td className={`${tableCellClassName} text-muted whitespace-nowrap`}>
+                      {new Date(entry.mintedAt).toLocaleDateString()}
+                    </td>
+                    <td className={`${tableCellClassName} w-0`}>
+                      <div className="flex items-center gap-2">
+                        <CopyButton value={entry.readable} />
+                        <span className="text-[.7rem] text-muted">readable</span>
+                        <CopyButton value={entry.sneaky} />
+                        <span className="text-[.7rem] text-muted">sneaky</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
     </div>
