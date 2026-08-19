@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
   await client.shutdown();
 
   return Response.redirect(
-    "https://hoperogan.com/?utm_source=chat&utm_medium=direct&utm_campaign=home",
+    "https://hoperogan.com/?utm_source=lc&utm_medium=direct&utm_campaign=home",
     307
   );
 }
