@@ -14,6 +14,44 @@ export function DiscordIcon() {
   );
 }
 
+/** Stroked outline icons for the theme switch, sized to match the social glyphs above. */
+const strokeProps = {
+  viewBox: "0 0 24 24",
+  "aria-hidden": true,
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  strokeLinejoin: "round",
+  className: "h-[15px] w-[15px]",
+} as const;
+
+export function MonitorIcon() {
+  return (
+    <svg {...strokeProps}>
+      <rect x="2" y="4" width="20" height="13" rx="2" />
+      <path d="M8 21h8M12 17v4" />
+    </svg>
+  );
+}
+
+export function SunIcon() {
+  return (
+    <svg {...strokeProps}>
+      <circle cx="12" cy="12" r="4.25" />
+      <path d="M12 2v2.5M12 19.5V22M4.22 4.22l1.77 1.77M18.01 18.01l1.77 1.77M2 12h2.5M19.5 12H22M4.22 19.78l1.77-1.77M18.01 5.99l1.77-1.77" />
+    </svg>
+  );
+}
+
+export function MoonIcon() {
+  return (
+    <svg {...strokeProps}>
+      <path d="M20.5 14.3A8.5 8.5 0 0 1 9.7 3.5a8.5 8.5 0 1 0 10.8 10.8z" />
+    </svg>
+  );
+}
+
 export function GitHubIcon() {
   return (
     <svg viewBox="0 0 24 24" aria-hidden="true" className="h-[15px] w-[15px] fill-current">

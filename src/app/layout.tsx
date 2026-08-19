@@ -26,13 +26,25 @@ export const metadata: Metadata = {
   },
 };
 
+/**
+ * Resolves the stored three-way preference (system/light/dark) to a concrete
+ * theme and stamps it on <html>. Runs synchronously while the browser parses
+ * the head, so the first paint is already in the right theme — see
+ * https://nextjs.org/docs/app/guides/preventing-flash-before-hydration.
+ * Keep in sync with `resolveTheme` in `components/theme-toggle.tsx`.
+ */
+const THEME_SCRIPT = `(function(){try{var t=localStorage.getItem("theme");var d=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);document.documentElement.dataset.theme=d?"dark":"light"}catch(e){}})()`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jakarta.variable} scroll-smooth`}>
+    <html lang="en" data-theme="light" suppressHydrationWarning className={`${jakarta.variable} scroll-smooth`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body className="bg-paper font-sans text-base font-medium text-ink">
         <PostHogProvider />
         <AnimatedGrid />

@@ -64,7 +64,7 @@ export default function ExperienceList() {
               ref={(el: HTMLElement | null) => {
                 itemRefs.current[index] = el;
               }}
-              className="overflow-hidden rounded-[20px] border border-line bg-white/56"
+              className="overflow-hidden rounded-[20px] border border-line bg-surface"
             >
               <AccordionTrigger className="group grid w-full cursor-pointer grid-cols-[1.5fr_1fr_auto_20px] items-center gap-5 border-0 bg-transparent px-6 py-[23px] text-left text-inherit [font:inherit] max-[700px]:relative max-[700px]:grid-cols-1 max-[700px]:gap-2.5 max-[700px]:pr-[55px]">
                 <div>

@@ -30,10 +30,10 @@ export default function CountdownHomeButton() {
   return (
     <Button href="/" className="relative pb-5">
       Take me home ↘
-      <span aria-hidden="true" className="absolute inset-x-5 bottom-2 h-[3px] rounded-full bg-white/25" />
+      <span aria-hidden="true" className="absolute inset-x-5 bottom-2 h-[3px] rounded-full bg-paper/25" />
       <span
         aria-hidden="true"
-        className={`absolute inset-x-5 bottom-2 h-[3px] origin-left rounded-full bg-white transition-transform ease-linear motion-reduce:duration-0 ${
+        className={`absolute inset-x-5 bottom-2 h-[3px] origin-left rounded-full bg-paper transition-transform ease-linear motion-reduce:duration-0 ${
           draining ? "scale-x-0" : "scale-x-100"
         }`}
         style={{ transitionDuration: `${COUNTDOWN_SECONDS}s` }}

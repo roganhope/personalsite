@@ -6,7 +6,7 @@ import posthog from "posthog-js";
 import { Confetti } from "./confetti";
 
 const fieldClassName =
-  "w-full rounded-lg border border-line bg-white px-4 py-3 text-[.9rem] text-ink outline-none transition-colors duration-150 focus:border-pink";
+  "w-full rounded-lg border border-line bg-surface-solid px-4 py-3 text-[.9rem] text-ink outline-none transition-colors duration-150 focus:border-pink";
 
 const labelClassName = "mb-1.5 block text-left text-[.7rem] font-[850] tracking-[.08em] text-muted uppercase";
 
@@ -87,7 +87,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={state.submitting}
-        className="inline-flex items-center justify-center gap-2.5 self-end rounded-full border border-ink bg-ink px-5 py-3.5 text-[.8rem] font-[850] tracking-[.06em] text-white uppercase shadow-[4px_4px_0_var(--color-pink)] transition-[transform,background,color,box-shadow] duration-[180ms] hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-pink hover:text-ink hover:shadow-[1px_1px_0_var(--color-pink)] disabled:pointer-events-none disabled:opacity-60"
+        className="inline-flex items-center justify-center gap-2.5 self-end rounded-full border border-ink bg-ink px-5 py-3.5 text-[.8rem] font-[850] tracking-[.06em] text-paper uppercase shadow-[4px_4px_0_var(--color-pink)] transition-[transform,background,color,box-shadow] duration-[180ms] hover:translate-x-[3px] hover:translate-y-[3px] hover:bg-pink hover:text-on-accent hover:shadow-[1px_1px_0_var(--color-pink)] disabled:pointer-events-none disabled:opacity-60"
       >
         {state.submitting ? "Sending…" : "Send message"}
       </button>
