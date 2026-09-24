@@ -26,6 +26,17 @@ export type Role = {
   funFactLink?: { text: string; href: string };
 };
 
+export type School = {
+  school: string;
+  location: string;
+  degree: string;
+  years: string;
+  /** Path under public/. */
+  logo: string;
+  /** Flat-black logo that needs flipping to stay visible on a dark card. */
+  monochrome?: boolean;
+};
+
 export type Review = {
   name: string;
   /** Their LinkedIn headline (or role, for direct reviews). */
@@ -89,6 +100,24 @@ export const projects: Project[] = [
     copy: "A public group scheduling app. Still in beta release, with more features coming soon.",
     href: "https://findatime.tech/",
     image: "/findatimetech.png",
+  },
+];
+
+export const education: School[] = [
+  {
+    school: "Tufts University",
+    location: "Medford, MA",
+    degree: "Master of Science in Computer Science",
+    years: "2023 - 2025",
+    logo: "/education/tufts-wordmark.png",
+  },
+  {
+    school: "University of Massachusetts Amherst",
+    location: "Amherst, MA",
+    degree: "Bachelor of Arts in Economics",
+    years: "2017 - 2021",
+    logo: "/education/umass-seal.png",
+    monochrome: true,
   },
 ];
 
