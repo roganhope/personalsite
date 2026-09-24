@@ -96,6 +96,12 @@ local values, and apply the changes to the files above — don't touch
 
 ## PostHog: traffic source dashboard
 
+The PostHog account is **project 535257**, under the `hope.e.rogan@gmail.com`
+Google SSO login — sign in with "Continue with Google", not a password. Any
+PostHog credential this project uses (the public project token, the personal
+API key below) is minted from that account; a key made under a different
+login won't see this project at all.
+
 Dashboard at https://us.posthog.com/project/535257/dashboard/1945665 tracks
 who is visiting the site and where they're coming from (referrer, UTM source,
 etc.). Created to understand traffic attribution for the redirect/tracking
@@ -235,9 +241,23 @@ clicks counted separately. Querying rather than keeping our own counter means
 the numbers always agree with the dashboard.
 
 It needs two server-only env vars — `POSTHOG_PERSONAL_API_KEY` and
-`POSTHOG_PROJECT_ID`. Without them the panel still mints links; the table
-just says what's missing. Same for a failed query: minting must never go down
-because analytics is unreachable.
+`POSTHOG_PROJECT_ID` (535257). Without them the panel still mints links; the
+table just says what's missing. Same for a failed query: minting must never
+go down because analytics is unreachable.
+
+To mint the key, signed in as `hope.e.rogan@gmail.com`:
+
+1. https://us.posthog.com/settings/user-api-keys → **Create a personal API
+   key**.
+2. Label it for its job, e.g. "personalsite admin stats".
+3. Scope it to **Query: Read** only, and to the hoperogan.com project.
+   Anything broader is a key that can rewrite the project sitting in an env
+   var.
+4. Copy the value immediately — it is shown once and never again.
+5. Put it in `.env.local` and in Vercel (all environments).
+
+A key that's missing the scope fails as a 403, which the table surfaces as
+"PostHog returned 403" rather than an empty result.
 
 One gotcha if you touch the query: JSON properties come back as strings, so
 `countIf(properties.known_visitor)` fails with a type error — compare it as a
