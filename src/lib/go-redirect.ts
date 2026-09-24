@@ -1,6 +1,8 @@
 import { PostHog } from "posthog-node";
 import { after, userAgent } from "next/server";
 import type { NextRequest } from "next/server";
+import { isRetired } from "./go-links";
+import type { LinkFormat } from "./link-crypto";
 
 // Attribution params read off an incoming /go URL, e.g.
 // /go/github?s=resume&c=pogo-full-stack. Most destinations are third-party
@@ -42,7 +44,8 @@ function distinctIdFor(request: NextRequest) {
 
 // The one way a tracked link resolves: capture a link_click (unless the
 // clicker is a bot) and 307 to the destination. Shared by /go/[slug] and
-// /go/p/[token] so both link forms record identical events.
+// /go/p/[token] so both link forms record identical events — including the
+// retirement check, which therefore can't drift between the two routes.
 export function trackAndRedirect(
   request: NextRequest,
   {
@@ -50,13 +53,22 @@ export function trackAndRedirect(
     source,
     campaign,
     destination,
+    format,
   }: {
     slug: string;
     source: string | null;
     campaign: string | null;
     destination: string;
+    format: LinkFormat;
   }
 ) {
+  // A retired code still records its click: an old printout in circulation is
+  // worth knowing about, and silence would look the same as nobody scanning.
+  const retired = isRetired(slug, campaign);
+  const target = retired
+    ? new URL("/retired", request.nextUrl.origin).toString()
+    : destination;
+
   // Mail providers and chat apps fetch every link in a message before a human
   // ever sees it, which would otherwise land here as a click.
   if (!userAgent(request).isBot) {
@@ -67,6 +79,8 @@ export function trackAndRedirect(
       campaign,
       referrer: request.headers.get("referer") ?? null,
       known_visitor: knownVisitor,
+      format,
+      retired,
       environment: process.env.NODE_ENV,
     };
 
@@ -82,5 +96,5 @@ export function trackAndRedirect(
     });
   }
 
-  return Response.redirect(destination, 307);
+  return Response.redirect(target, 307);
 }

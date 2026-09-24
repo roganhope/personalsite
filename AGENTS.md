@@ -96,6 +96,12 @@ local values, and apply the changes to the files above — don't touch
 
 ## PostHog: traffic source dashboard
 
+The PostHog account is **project 535257**, under the `hope.e.rogan@gmail.com`
+Google SSO login — sign in with "Continue with Google", not a password. Any
+PostHog credential this project uses (the public project token, the personal
+API key below) is minted from that account; a key made under a different
+login won't see this project at all.
+
 Dashboard at https://us.posthog.com/project/535257/dashboard/1945665 tracks
 who is visiting the site and where they're coming from (referrer, UTM source,
 etc.). Created to understand traffic attribution for the redirect/tracking
@@ -186,6 +192,76 @@ Three server-only env vars back this (see `.env.example`): `ADMIN_PASSWORD`,
 `SESSION_SECRET` (rotate freely — logs devices out), and `LINK_SECRET`
 (rotating it silently kills every sneaky link already sent — don't). All
 three must be set in Vercel for the panel and `/go/p` links to work in prod.
+
+### QR codes
+
+The link builder renders a QR alongside every link it mints, with SVG and PNG
+downloads. **SVG is the one to print** — it stays sharp at any size.
+
+The code encodes the `/go/p/<token>` form, never the readable one: most QR
+reader apps show the URL before opening it, so a readable link on a printed
+resume would announce both that it's tracked and which company that copy was
+for.
+
+The QR gets its **own token**, minted with `format: "qr"`, so a scan and a
+click on the same destination stay apart in PostHog without overloading
+source or campaign. `format` is a fourth field inside the encrypted payload
+(`src/lib/link-crypto.ts`), and `decryptLinkToken` accepts three-part tokens
+too — anything minted before QR codes existed decodes as `"link"`. Don't
+"tidy" that up: those tokens are sitting in sent email and must keep working.
+
+A printed code is re-pointable because the token carries a *slug*, not a URL —
+change the destination in `destinations` and the printed code follows on the
+next deploy.
+
+The QR sits on `bg-scan`, a token that stays white in both themes (like
+`on-accent`). A QR inverted by dark mode is a QR that scanners struggle with.
+
+### Retiring a code
+
+There's no link store, so "delete this QR code" is an entry in `retiredCodes`
+in `src/lib/go-links.ts` and a deploy:
+
+```ts
+{ slug: "github", campaign: "acme-staff-eng" }  // one printed run
+{ slug: "maiscribe" }                            // every code for a destination
+```
+
+`trackAndRedirect` is the only place that consults `isRetired`, so both link
+forms behave identically. A retired code still records its `link_click` —
+with `retired: true`, so an old printout still circulating is visible rather
+than silent — and then lands the scanner on `/retired`, a real page rather
+than a redirect: someone who scanned a dead code deserves to read why.
+
+### Link and QR usage on the admin panel
+
+The panel's usage table reads `link_click` back out of PostHog via HogQL
+(`src/lib/posthog-query.ts`), grouped by slug and campaign, with scans and
+clicks counted separately. Querying rather than keeping our own counter means
+the numbers always agree with the dashboard.
+
+It needs two server-only env vars — `POSTHOG_PERSONAL_API_KEY` and
+`POSTHOG_PROJECT_ID` (535257). Without them the panel still mints links; the
+table just says what's missing. Same for a failed query: minting must never
+go down because analytics is unreachable.
+
+To mint the key, signed in as `hope.e.rogan@gmail.com`:
+
+1. https://us.posthog.com/settings/user-api-keys → **Create a personal API
+   key**.
+2. Label it for its job, e.g. "personalsite admin stats".
+3. Scope it to **Query: Read** only, and to the hoperogan.com project.
+   Anything broader is a key that can rewrite the project sitting in an env
+   var.
+4. Copy the value immediately — it is shown once and never again.
+5. Put it in `.env.local` and in Vercel (all environments).
+
+A key that's missing the scope fails as a 403, which the table surfaces as
+"PostHog returned 403" rather than an empty result.
+
+One gotcha if you touch the query: JSON properties come back as strings, so
+`countIf(properties.known_visitor)` fails with a type error — compare it as a
+string.
 
 ### What the routes do with bots and identity
 

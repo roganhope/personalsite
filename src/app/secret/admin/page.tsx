@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import LinkGenerator from "@/components/admin/link-generator";
+import LinkStats from "@/components/admin/link-stats";
 import LoginForm from "@/components/admin/login-form";
 import RegisteredLinks from "@/components/admin/registered-links";
 import Wrap from "@/components/wrap";
@@ -25,6 +26,7 @@ export default async function AdminPage() {
           {authed ? (
             <div className="flex flex-col gap-14">
               <LinkGenerator />
+              <LinkStats />
               <RegisteredLinks />
             </div>
           ) : (

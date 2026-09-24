@@ -20,6 +20,9 @@
   --pink: #ff3b8d;
   /* Text sitting on a pink fill — stays dark in both themes. */
   --on-accent: #171516;
+  /* The quiet zone behind a QR code — stays white in both themes, because a
+     retinted code is a code that scanners struggle to read. */
+  --scan: #ffffff;
 
   /* Card fill: translucent so the animated grid reads through it. */
   --surface: rgb(255 255 255 / 0.56);
@@ -51,6 +54,7 @@
   --line-strong: #454142;
   --pink: #ff3b8d;
   --on-accent: #171516;
+  --scan: #ffffff;
 
   --surface: rgb(38 35 37 / 0.72);
   --surface-solid: #201e1f;
@@ -129,6 +133,7 @@
   --color-line-strong: var(--line-strong);
   --color-pink: var(--pink);
   --color-on-accent: var(--on-accent);
+  --color-scan: var(--scan);
 
   --color-surface: var(--surface);
   --color-surface-solid: var(--surface-solid);
