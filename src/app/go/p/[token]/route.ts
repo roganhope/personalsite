@@ -19,7 +19,7 @@ export async function GET(
     return Response.redirect(destinations.site.url, 307);
   }
 
-  const { slug, source, campaign } = payload;
+  const { slug, source, campaign, format } = payload;
   const destination = resolveDestination(
     slug,
     source,
@@ -31,5 +31,11 @@ export async function GET(
     return Response.redirect(destinations.site.url, 307);
   }
 
-  return trackAndRedirect(request, { slug, source, campaign, destination });
+  return trackAndRedirect(request, {
+    slug,
+    source,
+    campaign,
+    destination,
+    format,
+  });
 }

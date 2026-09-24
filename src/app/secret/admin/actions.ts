@@ -1,6 +1,7 @@
 "use server";
 
 import { cookies } from "next/headers";
+import QRCode from "qrcode";
 import { destinations } from "@/lib/go-links";
 import { encryptLinkToken } from "@/lib/link-crypto";
 import {
@@ -45,6 +46,11 @@ export type GenerateState = {
   campaign?: string | null;
   readable?: string;
   sneaky?: string;
+  // The QR encodes its own token, minted with format: "qr", so a scan and a
+  // click on the same destination stay separable in PostHog.
+  qrLink?: string;
+  qrSvg?: string;
+  qrPng?: string;
 };
 
 // Same character policy as the redirect route's attribution() parser, so what
@@ -80,13 +86,40 @@ export async function generateLinks(
   if (source) readable.searchParams.set("s", source);
   if (campaign) readable.searchParams.set("c", campaign);
 
-  const token = await encryptLinkToken({ slug, source, campaign });
+  const [linkToken, qrToken] = await Promise.all([
+    encryptLinkToken({ slug, source, campaign, format: "link" }),
+    encryptLinkToken({ slug, source, campaign, format: "qr" }),
+  ]);
+
+  const qrLink = `${SITE_ORIGIN}/go/p/${qrToken}`;
+
+  // Rendered here rather than in the browser so the token never reaches a
+  // third-party image service. Plain black on white: a logo in the middle
+  // spends error correction on decoration. "M" tolerates ~15% damage, which
+  // covers the scuffing a printed card picks up.
+  const [qrSvg, qrPng] = await Promise.all([
+    QRCode.toString(qrLink, {
+      type: "svg",
+      margin: 1,
+      errorCorrectionLevel: "M",
+    }),
+    QRCode.toDataURL(qrLink, {
+      type: "image/png",
+      margin: 1,
+      errorCorrectionLevel: "M",
+      // Big enough to print sharply; a card-sized code is ~300dpi at this size.
+      width: 1024,
+    }),
+  ]);
 
   return {
     slug,
     source,
     campaign,
     readable: readable.toString(),
-    sneaky: `${SITE_ORIGIN}/go/p/${token}`,
+    sneaky: `${SITE_ORIGIN}/go/p/${linkToken}`,
+    qrLink,
+    qrSvg,
+    qrPng,
   };
 }

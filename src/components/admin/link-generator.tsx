@@ -4,6 +4,7 @@ import { useMemo, useState, useSyncExternalStore } from "react";
 import { useFormStatus } from "react-dom";
 import { destinations, sources } from "@/lib/go-links";
 import CopyButton from "./copy-button";
+import QrCode from "./qr-code";
 import {
   generateLinks,
   type GenerateState,
@@ -207,6 +208,15 @@ export default function LinkGenerator() {
         <div className="mx-auto flex w-full max-w-[560px] flex-col gap-5">
           <LinkRow label="Readable" url={result.readable} />
           <LinkRow label="Sneaky" url={result.sneaky} />
+          {result.qrSvg && result.qrPng && result.qrLink && result.slug && (
+            <QrCode
+              svg={result.qrSvg}
+              png={result.qrPng}
+              link={result.qrLink}
+              slug={result.slug}
+              campaign={result.campaign ?? null}
+            />
+          )}
         </div>
       )}
 

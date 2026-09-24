@@ -22,5 +22,12 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  return trackAndRedirect(request, { slug, source, campaign, destination });
+  // A readable link has nowhere to carry a format, so it is always a click.
+  return trackAndRedirect(request, {
+    slug,
+    source,
+    campaign,
+    destination,
+    format: "link",
+  });
 }

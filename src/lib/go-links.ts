@@ -109,3 +109,26 @@ export function resolveDestination(
   if (slug === "site") return siteDestination(source, campaign, origin);
   return destinations[slug]?.url ?? null;
 }
+
+// Retiring a code is how a printed QR gets "deleted": there is no link store
+// to remove a row from, so the retirement lives here and ships with a deploy.
+// An entry with a campaign kills one specific print run — the usual case,
+// since a campaign is minted per run. Without one it kills every code
+// pointing at that destination.
+export type RetiredCode = { slug: string; campaign?: string };
+
+export const retiredCodes: RetiredCode[] = [];
+
+// `codes` is a parameter so the matching rules can be tested without
+// depending on what is currently retired.
+export function isRetired(
+  slug: string,
+  campaign: string | null,
+  codes: RetiredCode[] = retiredCodes
+) {
+  return codes.some(
+    (code) =>
+      code.slug === slug &&
+      (code.campaign === undefined || code.campaign === campaign)
+  );
+}

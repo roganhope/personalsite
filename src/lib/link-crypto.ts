@@ -1,16 +1,25 @@
 // Sneaky link tokens: the whole payload (destination slug, source, campaign)
 // rides inside the URL as an AES-256-GCM blob, so no link store exists and a
 // minted link keeps working across deploys. The token is
-// base64url( IV[12] ‖ ciphertext ‖ GCM tag[16] ) over "slug␟source␟campaign"
-// (U+001F separators, empty string for null).
+// base64url( IV[12] ‖ ciphertext ‖ GCM tag[16] ) over
+// "slug␟source␟campaign␟format" (U+001F separators, empty string for null).
+//
+// Tokens minted before `format` existed carry only the first three parts and
+// decode as "link" — they are sitting in sent messages and must keep working.
 //
 // LINK_SECRET must outlive sessions — minted tokens sit in sent messages for
 // months, and rotating it silently turns them all into untracked redirects.
+
+// "qr" marks a token that was printed as a QR code rather than sent as a
+// link, so a scan and a click on the same destination stay distinguishable in
+// PostHog without overloading source or campaign.
+export type LinkFormat = "qr" | "link";
 
 export type LinkPayload = {
   slug: string;
   source: string | null;
   campaign: string | null;
+  format: LinkFormat;
 };
 
 const SEPARATOR = "\x1f";
@@ -45,6 +54,7 @@ export async function encryptLinkToken(payload: LinkPayload) {
     payload.slug,
     payload.source ?? "",
     payload.campaign ?? "",
+    payload.format,
   ].join(SEPARATOR);
 
   const iv = crypto.getRandomValues(new Uint8Array(IV_LENGTH));
@@ -73,12 +83,15 @@ export async function decryptLinkToken(
     );
 
     const parts = new TextDecoder().decode(plaintext).split(SEPARATOR);
-    if (parts.length !== 3 || !parts[0]) return null;
+    if (parts.length < 3 || parts.length > 4 || !parts[0]) return null;
 
     return {
       slug: parts[0],
       source: parts[1] || null,
       campaign: parts[2] || null,
+      // Anything but "qr" — a missing part on a legacy token, or a format a
+      // later build invented — reads as an ordinary link.
+      format: parts[3] === "qr" ? "qr" : "link",
     };
   } catch {
     return null;
