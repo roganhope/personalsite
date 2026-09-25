@@ -1,10 +1,9 @@
 "use client";
 
 import posthog from "posthog-js";
-import { DiscordIcon, EmailIcon, GitHubIcon, LinkedInIcon } from "./icons";
+import { socialLabel, socialLinks } from "./social-links";
 import ThemeToggle from "./theme-toggle";
 import Wrap from "./wrap";
-import { EMAIL } from "@/lib/content";
 
 export default function SiteFooter() {
   return (
@@ -15,44 +14,18 @@ export default function SiteFooter() {
         <p className="whitespace-nowrap">&copy; {new Date().getFullYear()} Hope Rogan</p>
         <ThemeToggle />
         <div className="flex flex-wrap justify-center gap-x-4.5 gap-y-2 font-bold">
-          <a
-            href={`mailto:${EMAIL}`}
-            onClick={() => posthog.capture("email_clicked")}
-            className="inline-flex items-center gap-1.75 hover:text-pink"
-          >
-            <EmailIcon />
-            {EMAIL}
-          </a>
-          <a
-            href="https://www.linkedin.com/in/hoperogan/"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => posthog.capture("linkedin_clicked")}
-            className="inline-flex items-center gap-1.75 hover:text-pink"
-          >
-            <LinkedInIcon />
-            LinkedIn ↗
-          </a>
-          <a
-            href="https://github.com/roganhope"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => posthog.capture("github_clicked")}
-            className="inline-flex items-center gap-1.75 hover:text-pink"
-          >
-            <GitHubIcon />
-            GitHub ↗
-          </a>
-          <a
-            href="https://discord.gg/prK7bXqrWQ"
-            target="_blank"
-            rel="noreferrer"
-            onClick={() => posthog.capture("discord_clicked")}
-            className="inline-flex items-center gap-1.75 hover:text-pink"
-          >
-            <DiscordIcon />
-            Discord ↗
-          </a>
+          {socialLinks.map(({ Icon, ...link }) => (
+            <a
+              key={link.event}
+              href={link.href}
+              {...(link.external ? { target: "_blank", rel: "noreferrer" } : {})}
+              onClick={() => posthog.capture(link.event)}
+              className="inline-flex items-center gap-1.75 hover:text-pink"
+            >
+              <Icon />
+              {socialLabel(link)}
+            </a>
+          ))}
         </div>
       </Wrap>
     </footer>

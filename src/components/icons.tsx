@@ -67,3 +67,30 @@ export function GitHubIcon() {
     </svg>
   );
 }
+
+/** Nav toggle glyphs — a touch larger than the social/theme icons so they stay tappable. */
+const navGlyphProps = {
+  viewBox: "0 0 24 24",
+  "aria-hidden": true,
+  fill: "none",
+  stroke: "currentColor",
+  strokeWidth: 2,
+  strokeLinecap: "round",
+  className: "h-[18px] w-[18px]",
+} as const;
+
+export function MenuIcon() {
+  return (
+    <svg {...navGlyphProps}>
+      <path d="M3.5 7h17M3.5 12h17M3.5 17h17" />
+    </svg>
+  );
+}
+
+export function CloseIcon() {
+  return (
+    <svg {...navGlyphProps}>
+      <path d="M5.5 5.5l13 13M18.5 5.5l-13 13" />
+    </svg>
+  );
+}
