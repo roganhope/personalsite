@@ -41,6 +41,37 @@ Flat-black logos in `public/skill-icons/` would vanish on a dark card, so
 `monochromeIcons` in `src/components/skills.tsx` lists the ones that get
 `dark:invert`. Add to that set when a new icon has no color of its own.
 
+## Navigation
+
+The header swaps layouts at **700px**, and both halves have to move together:
+above it the inline Portfolio/Contact links show (`max-[700px]:hidden`), below
+it the hamburger in `src/components/mobile-menu.tsx` does
+(`min-[700px]:hidden`). The same 700px is hardcoded a third time as
+`DESKTOP_QUERY` in that file, which closes the overlay when a resize crosses back
+into the desktop layout — an overlay left open there would be stranded over a
+header with no visible button to close it.
+
+The open menu is a `fixed inset-0` overlay on opaque `bg-paper`: nav items
+centered in the space it has, socials stacked along the bottom. Three things
+hold that up and are easy to break:
+
+- The header is `z-20` while `<main>` in `src/app/page.tsx` is `z-10`. The
+  overlay renders *inside* the header, and at equal z-index main wins on DOM
+  order — the hero paints straight over the menu.
+- The wordmark and the toggle both carry `relative z-10` so they stay above the
+  overlay. Drop either and the bar disappears the moment the menu opens.
+- Both halves of the overlay are `shrink-0`, so a short landscape viewport
+  scrolls the overlay instead of squeezing Contact into the email row.
+
+Opening also locks `document.body` scroll and traps Tab between the toggle and
+the menu's links, since the overlay hides the page without removing it from the
+tab order.
+
+Its links come from two places — the nav items are a local `navLinks` array,
+and the social rows are the shared `socialLinks` in
+`src/components/social-links.tsx`, which the footer renders too. Add a social
+link there and it appears in both.
+
 ## Regenerating the hero gif
 
 `public/hero.gif` is a recording of the hero intro animation (heading typing
@@ -82,12 +113,13 @@ gh api repos/roganhope/resumes/contents/src/content/icons --jq '.[].name'
 - **`links.json`** — not present in the resumes repo yet (as of 2026-07-31);
   the user plans to add it there. Once it exists, treat it as a flat
   `{ discord, website, linkedin, github, ... }` object of social/profile
-  URLs, mapping to the hardcoded `<a>` tags in `src/components/site-footer.tsx`
-  (currently email, LinkedIn, GitHub, and Discord — add/update entries to
-  match, using `src/components/icons.tsx` for icons, adding new icon
-  components if needed). The email address itself is the `EMAIL` constant in
-  `src/lib/content.ts`, not a literal in the footer. Until `links.json` exists,
-  skip links syncing.
+  URLs, mapping to the `socialLinks` array in
+  `src/components/social-links.tsx` (currently email, LinkedIn, GitHub, and
+  Discord — add/update entries to match, using `src/components/icons.tsx` for
+  icons, adding new icon components if needed). That one array feeds both the
+  footer and the mobile menu, so an entry added there shows up in both. The
+  email address itself is the `EMAIL` constant in `src/lib/content.ts`, not a
+  literal in the array. Until `links.json` exists, skip links syncing.
 
 Only sync when explicitly asked ("update skills," "sync links," or similar)
 — never proactively. Pull the relevant file(s), diff against the current
