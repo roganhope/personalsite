@@ -174,7 +174,7 @@ export const roles: Role[] = [
     title: "Data Science Intern & Operations Representative",
     company: "EQRx",
     focus: "",
-    years: "2021 - 2024",
+    years: "2021 - 2023",
     bullets: [
       {
         lead: "Promoted to Data Science Intern from operational role.",
