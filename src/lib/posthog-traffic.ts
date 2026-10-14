@@ -1,7 +1,7 @@
 import "server-only";
 
-// The admin panel's copy of the "Campaign & Traffic Tracking" PostHog
-// dashboard (project 535257, dashboard 1945665). Each tile is the same
+// The admin panel's copy of two charts from the "Campaign & Traffic Tracking"
+// PostHog dashboard (project 535257, dashboard 1945665). Each tile is the same
 // TrendsQuery the saved insight runs, sent to the query API with
 // filterTestAccounts on, so the numbers and the internal/family exclusion
 // match the dashboard exactly rather than being re-derived in HogQL.
@@ -10,8 +10,8 @@ export type TrafficSeries = {
   label: string;
   days: string[];
   data: number[];
-  // Unique-over-the-period total; present for table/bar displays, where the
-  // per-day `data` is empty and summing it would double-count anyway.
+  // Shown in the legend: PostHog's aggregated_value when it sends one (it
+  // doesn't for line graphs), otherwise the sum of the per-day `data`.
   total: number;
 };
 
@@ -21,14 +21,10 @@ export type TrafficTile =
 
 export type TrafficTiles = {
   activity: TrafficTile;
-  referrers: TrafficTile;
-  utmSources: TrafficTile;
-  recruiterCampaigns: TrafficTile;
-  newRecruiterVisitors: TrafficTile;
   utmOverTime: TrafficTile;
 };
 
-type Display = "ActionsLineGraph" | "ActionsTable";
+type Display = "ActionsLineGraph";
 
 type SeriesSpec = {
   event: string;
@@ -53,7 +49,6 @@ function trends(options: {
   interval: "day" | "week";
   dateFrom: string;
   breakdown?: string;
-  recruiterOnly?: boolean;
 }) {
   return {
     kind: "TrendsQuery",
@@ -62,16 +57,6 @@ function trends(options: {
     dateRange: { date_from: options.dateFrom },
     filterTestAccounts: true,
     trendsFilter: { display: options.display },
-    ...(options.recruiterOnly && {
-      properties: [
-        {
-          key: "utm_source",
-          type: "event",
-          value: ["recruiter"],
-          operator: "exact",
-        },
-      ],
-    }),
     ...(options.breakdown && {
       breakdownFilter: {
         breakdowns: [{ type: "event", property: options.breakdown }],
@@ -96,36 +81,6 @@ const QUERIES = {
     display: "ActionsLineGraph",
     interval: "day",
     dateFrom: "-30d",
-  }),
-  referrers: trends({
-    series: [visitors()],
-    display: "ActionsTable",
-    interval: "day",
-    dateFrom: "-30d",
-    breakdown: "$referring_domain",
-  }),
-  utmSources: trends({
-    series: [visitors()],
-    display: "ActionsTable",
-    interval: "day",
-    dateFrom: "-30d",
-    breakdown: "utm_source",
-  }),
-  recruiterCampaigns: trends({
-    series: [visitors()],
-    display: "ActionsTable",
-    interval: "week",
-    dateFrom: "-90d",
-    breakdown: "utm_campaign",
-    recruiterOnly: true,
-  }),
-  newRecruiterVisitors: trends({
-    series: [{ event: PAGEVIEW, math: "first_time_for_user", name: "New visitors" }],
-    display: "ActionsTable",
-    interval: "week",
-    dateFrom: "-90d",
-    breakdown: "utm_campaign",
-    recruiterOnly: true,
   }),
   utmOverTime: trends({
     series: [visitors()],
@@ -153,8 +108,13 @@ function toSeries(result: Record<string, unknown>, hasBreakdown: boolean) {
   const data = Array.isArray(result.data) ? result.data.map(Number) : [];
   const aggregated = Number(result.aggregated_value);
 
+  // `label` is the event name, so two series on $pageview would both read
+  // "$pageview"; the name we gave each series comes back as custom_name.
+  const action = result.action as { custom_name?: unknown } | undefined;
+  const seriesName = action?.custom_name ?? result.label ?? "—";
+
   return {
-    label: hasBreakdown ? breakdownLabel(result) : String(result.label ?? "—"),
+    label: hasBreakdown ? breakdownLabel(result) : String(seriesName),
     days: Array.isArray(result.days) ? result.days.map(String) : [],
     data,
     total: Number.isFinite(aggregated)
@@ -219,37 +179,15 @@ export async function fetchTrafficTiles(): Promise<TrafficTiles> {
     };
     return {
       activity: missing,
-      referrers: missing,
-      utmSources: missing,
-      recruiterCampaigns: missing,
-      newRecruiterVisitors: missing,
       utmOverTime: missing,
     };
   }
 
   const credentials = { apiKey, projectId };
-  const [
-    activity,
-    referrers,
-    utmSources,
-    recruiterCampaigns,
-    newRecruiterVisitors,
-    utmOverTime,
-  ] = await Promise.all([
+  const [activity, utmOverTime] = await Promise.all([
     runTile(QUERIES.activity, credentials),
-    runTile(QUERIES.referrers, credentials),
-    runTile(QUERIES.utmSources, credentials),
-    runTile(QUERIES.recruiterCampaigns, credentials),
-    runTile(QUERIES.newRecruiterVisitors, credentials),
     runTile(QUERIES.utmOverTime, credentials),
   ]);
 
-  return {
-    activity,
-    referrers,
-    utmSources,
-    recruiterCampaigns,
-    newRecruiterVisitors,
-    utmOverTime,
-  };
+  return { activity, utmOverTime };
 }

@@ -3,16 +3,12 @@ import {
   type TrafficSeries,
   type TrafficTile,
 } from "@/lib/posthog-traffic";
-import {
-  labelClassName,
-  tableCellClassName,
-  tableHeaderClassName,
-} from "./form-styles";
+import { labelClassName } from "./form-styles";
 
 const LINE_COLORS = [
   "var(--color-pink)",
   "var(--color-ink)",
-  "var(--color-scan)",
+  "var(--color-pink-soft)",
   "var(--color-muted)",
   "var(--color-line-strong)",
 ];
@@ -32,15 +28,24 @@ function shortDay(day: string) {
       });
 }
 
-function LineChart({ series }: { series: TrafficSeries[] }) {
+type ChartKind = "line" | "bar";
+
+function Chart({ series, kind }: { series: TrafficSeries[]; kind: ChartKind }) {
   const days = series[0]?.days ?? [];
   const max = Math.max(1, ...series.flatMap((s) => s.data));
   const plotWidth = WIDTH - PAD.left - PAD.right;
   const plotHeight = HEIGHT - PAD.top - PAD.bottom;
 
+  // Lines put each day on a point; bars give each day an equal band and
+  // centre the day's group of bars (one per series) inside it.
+  const band = plotWidth / Math.max(1, days.length);
+  const barWidth = (band * 0.8) / Math.max(1, series.length);
   const x = (i: number) =>
-    PAD.left + (days.length > 1 ? (i / (days.length - 1)) * plotWidth : 0);
+    kind === "bar"
+      ? PAD.left + (i + 0.5) * band
+      : PAD.left + (days.length > 1 ? (i / (days.length - 1)) * plotWidth : 0);
   const y = (value: number) => PAD.top + plotHeight - (value / max) * plotHeight;
+  const baseline = y(0);
 
   return (
     <div className="p-4">
@@ -70,30 +75,49 @@ function LineChart({ series }: { series: TrafficSeries[] }) {
             </text>
           </g>
         ))}
-        {series.map((s, index) => (
-          <polyline
-            key={s.label}
-            fill="none"
-            stroke={LINE_COLORS[index % LINE_COLORS.length]}
-            strokeWidth="2"
-            strokeLinejoin="round"
-            points={s.data.map((value, i) => `${x(i)},${y(value)}`).join(" ")}
-          />
-        ))}
+        {kind === "bar"
+          ? series.map((s, index) => (
+              <g key={s.label} fill={LINE_COLORS[index % LINE_COLORS.length]}>
+                {s.data.map((value, i) =>
+                  value > 0 ? (
+                    <rect
+                      key={i}
+                      x={x(i) - (barWidth * series.length) / 2 + index * barWidth}
+                      y={y(value)}
+                      width={barWidth}
+                      height={baseline - y(value)}
+                    >
+                      <title>{`${shortDay(days[i])} · ${s.label}: ${value}`}</title>
+                    </rect>
+                  ) : null,
+                )}
+              </g>
+            ))
+          : series.map((s, index) => (
+              <polyline
+                key={s.label}
+                fill="none"
+                stroke={LINE_COLORS[index % LINE_COLORS.length]}
+                strokeWidth="2"
+                strokeLinejoin="round"
+                points={s.data.map((value, i) => `${x(i)},${y(value)}`).join(" ")}
+              />
+            ))}
         {days.length > 0 && (
           <>
             <text
-              x={PAD.left}
+              x={x(0)}
               y={HEIGHT - 6}
+              textAnchor={kind === "bar" ? "middle" : "start"}
               fontSize="9"
               fill="var(--color-muted)"
             >
               {shortDay(days[0])}
             </text>
             <text
-              x={WIDTH - PAD.right}
+              x={x(days.length - 1)}
               y={HEIGHT - 6}
-              textAnchor="end"
+              textAnchor={kind === "bar" ? "middle" : "end"}
               fontSize="9"
               fill="var(--color-muted)"
             >
@@ -118,49 +142,16 @@ function LineChart({ series }: { series: TrafficSeries[] }) {
   );
 }
 
-function TableBody({
-  series,
-  heading,
-}: {
-  series: TrafficSeries[];
-  heading: string;
-}) {
-  const rows = [...series].sort((a, b) => b.total - a.total);
-
-  return (
-    <table className="w-full border-collapse text-[.8rem]">
-      <thead>
-        <tr>
-          <th className={tableHeaderClassName}>{heading}</th>
-          <th className={`${tableHeaderClassName} text-right`}>Visitors</th>
-        </tr>
-      </thead>
-      <tbody>
-        {rows.map((row) => (
-          <tr key={row.label}>
-            <td className={tableCellClassName}>{row.label}</td>
-            <td className={`${tableCellClassName} text-right tabular-nums`}>
-              {row.total}
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
-}
-
 function Tile({
   title,
   note,
   tile,
-  heading,
   chart,
 }: {
   title: string;
   note: string;
   tile: TrafficTile;
-  heading?: string;
-  chart?: boolean;
+  chart: ChartKind;
 }) {
   return (
     <div>
@@ -170,10 +161,8 @@ function Tile({
           <p className="px-4 py-3 text-[.8rem] text-muted">{tile.error}</p>
         ) : tile.series.length === 0 ? (
           <p className="px-4 py-3 text-[.8rem] text-muted">No visits yet.</p>
-        ) : chart ? (
-          <LineChart series={tile.series} />
         ) : (
-          <TableBody series={tile.series} heading={heading ?? "Source"} />
+          <Chart series={tile.series} kind={chart} />
         )}
       </div>
       <p className="mt-2 text-[.7rem] text-muted">{note}</p>
@@ -181,8 +170,8 @@ function Tile({
   );
 }
 
-// A copy of the "Campaign & Traffic Tracking" PostHog dashboard. Same queries,
-// same test-account filter, so these agree with the dashboard.
+// Two charts copied from the "Campaign & Traffic Tracking" PostHog dashboard.
+// Same queries, same test-account filter, so these agree with the dashboard.
 export default async function TrafficStats() {
   const tiles = await fetchTrafficTiles();
 
@@ -192,37 +181,13 @@ export default async function TrafficStats() {
         title="Visitor activity (30 days)"
         note="Daily unique visitors and pageviews. Excludes internal and family traffic."
         tile={tiles.activity}
-        chart
-      />
-      <Tile
-        title="Traffic sources (referring domain, 30 days)"
-        note="Which sites send visitors. Excludes internal and family traffic."
-        tile={tiles.referrers}
-        heading="Referring domain"
-      />
-      <Tile
-        title="Visitors by UTM source (30 days)"
-        note="Grouped by the utm_source param across all links."
-        tile={tiles.utmSources}
-        heading="utm_source"
+        chart="line"
       />
       <Tile
         title="Visitors over time by UTM source (30 days)"
         note="Daily unique visitors per utm_source."
         tile={tiles.utmOverTime}
-        chart
-      />
-      <Tile
-        title="Recruiter campaigns (90 days)"
-        note="Visitors from resume links (utm_source=recruiter), by utm_campaign."
-        tile={tiles.recruiterCampaigns}
-        heading="utm_campaign"
-      />
-      <Tile
-        title="New visitors by campaign (recruiter, 90 days)"
-        note="First-time visitors from resume links, by utm_campaign."
-        tile={tiles.newRecruiterVisitors}
-        heading="utm_campaign"
+        chart="bar"
       />
     </div>
   );
