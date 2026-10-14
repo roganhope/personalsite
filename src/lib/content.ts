@@ -10,6 +10,11 @@ export type Project = {
 };
 
 export type Bullet = {
+  /**
+   * Sub-role heading this bullet sits under. Consecutive bullets with the same
+   * group render as one labelled list; roles with no groups render one plain list.
+   */
+  group?: string;
   /** Bold lead-in phrase at the start of the bullet, if any. */
   lead?: string;
   text: string;
@@ -18,7 +23,10 @@ export type Bullet = {
 export type Role = {
   title: string;
   company: string;
-  focus: string;
+  /** Italic line beside the company name; leave empty to show nothing. */
+  companyDescription: string;
+  /** Short paragraph shown above the bullets, when a role needs context first. */
+  summary?: string;
   years: string;
   bullets: Bullet[];
   funFact: string;
@@ -125,24 +133,24 @@ export const roles: Role[] = [
   {
     title: "Project Manager & Software Engineer",
     company: "The Jade Platform",
-    focus: "",
-    years: "2025 - 2026",
+    companyDescription: "Fintech Startup: Options Management for Wealth Management Advisors",
+    years: "2025 - Present",
     bullets: [
       {
-        lead: "Led a team of 8 to design and build a B2B SaaS options trading and analytics platform",
-        text: " for Registered Investment Advisors, shipping the core product and its agentic AI feature to customers in 10 months to scale to enterprise level. Drove strategy, architecture, tooling, data-provider, and hiring decisions directly with founders and senior leadership, sequencing 20 releases on a biweekly cadence across 4 funding rounds.",
+        lead: "Served as technical and product lead, directing a team of 8",
+        text: " to turn an early startup concept into a production-ready B2B fintech platform in 10 months.",
       },
       {
-        lead: "Owned the product roadmap for the core platform",
-        text: ", ran development retros, and managed scope and delivery in Jira against a constantly shifting product strategy, shipping features on a frequent cadence alongside REST API design. Integrated PostHog analytics and usage campaigns to maintain visibility into how customers used the platform and to iterate on features from real usage. Designed and engineered CI/CD pipelines and cloud infrastructure for staging and production with secure secrets handling, supporting evals, observability, and safe deployment.",
+        lead: "Architected and built the platform from scratch",
+        text: ", including a Next.js client, Java/Spring Boot REST API, Python compute service, user analytics, and AWS deployment with Docker and secure CI/CD pipelines.",
       },
       {
-        lead: "Built the platform's core AI agent feature in one month on Spring AI",
-        text: " – an autonomous agent system for financial workflows with 8+ tool sets, invoking custom LLMs through AWS Bedrock with secure SSO-authenticated access. Weighed tradeoffs across various AI systems (LangChain, LangGraph, Llama, and Google ADK) before electing Spring AI for speed to production, with scale and migration in mind in agent design. Prioritized observability, production reliability, and financial and legal compliance; designed the system architecture to scale and engineered a custom admin panel with model invocation tracing for versioning, debugging, and building out test cases.",
+        lead: "Owned the product roadmap",
+        text: ", managing feature timelines, resource allocation, and integration vendor management, sequencing ~20 biweekly releases under tight resources while keeping the product aligned with a constantly evolving strategy across 4 funding rounds.",
       },
       {
-        lead: "Built and shipped an MCP server as a Claude Code Plugin",
-        text: " encoding domain expertise for the external data integration, delivering it to the team to standardize how they scoped, planned, and interacted with sandbox data, improving delivery speed and product quality by 80%. Drove team-wide adoption of agentic development, building internal developer tools including a centralized skill-sharing repo and automation that kept practices consistent across client and backend services.",
+        lead: "Led AI strategy across product and engineering",
+        text: ", including shipping a production agent that acts on the user's screen with built-in compliance guardrails, and managing team-wide AWS Bedrock access and custom Claude Code plugins for development.",
       },
     ],
     funFact:
@@ -151,20 +159,16 @@ export const roles: Role[] = [
   {
     title: "Full Stack Web Development & Design Teaching Assistant",
     company: "Tufts University",
-    focus: "",
+    companyDescription: "A 12,000-Student, Private, Nonsectarian, R1 Research University",
     years: "2024 - 2024",
     bullets: [
       {
-        lead: "Provided technical guidance to students on web development concepts",
-        text: ", including HTML, CSS, JavaScript, JSON, MongoDB, Node.js, PHP, SQL, NoSQL, API integration, and responsive design.",
+        lead: "Provided full-stack technical guidance to students",
+        text: " in office hours and online across HTML, CSS, JavaScript, JSON, MongoDB, Node.js, PHP, SQL, NoSQL, API integration, and responsive design.",
       },
       {
-        lead: "Led office hours and facilitated discussions",
-        text: " on an online board, clarifying concepts and troubleshooting coding issues to support student success including topics from database connections, UI improvement, and framework support.",
-      },
-      {
-        lead: "Operated in a fully remote environment",
-        text: ", showcasing strong self-management, communication, and collaboration skills to drive project success through tools such as Slack, Zoom, and Piazza.",
+        lead: "Reviewed, debugged, and graded student code with detailed, constructive feedback",
+        text: ", and ran office hours and an online discussion board working through database, framework, and architecture concepts.",
       },
     ],
     funFact:
@@ -173,37 +177,49 @@ export const roles: Role[] = [
   {
     title: "Data Science Intern & Operations Representative",
     company: "EQRx",
-    focus: "",
+    companyDescription: "Biotech Startup: Pharmaceuticals",
     years: "2021 - 2023",
     bullets: [
       {
-        lead: "Promoted to Data Science Intern from operational role.",
-        text: " Developed a Mode dashboard in collaboration with the Clinical Data Science team to analyze Small Cell Lung Cancer and gene mutation data, providing insight to support drug development.",
+        group: "Operations Representative",
+        lead: "Coordinated daily operations for a 400-person, $750M venture-backed biotech startup",
+        text: ", managing visitor access, deliveries, space allocation, vendor contracts and ordering, and regularly taking on projects beyond the role's scope.",
       },
       {
-        lead: "Coordinated management of a corporate facility",
-        text: " in Cambridge, Massachusetts, overseeing vendors, managing office supplies, administering access control, and supporting overall facility operations.",
+        group: "Operations Representative",
+        lead: "Led operations on a cross-functional committee planning the company's first 300+ person conference",
+        text: ", negotiating vendor contracts within budget, partnering with IT to install fiber-optic internet, and hiring and managing temporary staff, delivering an event that received highly positive attendee feedback.",
       },
       {
-        lead: "Served on the planning committee for a successful 300+ person conference",
-        text: ", leading event research, contract execution, IT infrastructure coordination, logistics management, and event staff supervision.",
+        group: "Operations Representative",
+        lead: "Built and maintained an automated reporting pipeline using Bash and Python (pandas)",
+        text: " that extracted and cleaned badge access data into a monthly attendance report, replacing manual estimates and giving operations reliable data to set ongoing parking and benefits policy.",
       },
       {
-        lead: "Automated access panel control data collection and analysis",
-        text: " to track office traffic, enabling data-driven decisions on parking allocation and employee benefits.",
+        group: "Operations Representative",
+        lead: "Proposed and built a Python tool to calculate employee commute distances",
+        text: ", sourcing ADP data across teams and integrating the Google Maps API, then deployed it in Mode to give HR a reusable, data-driven basis for travel reimbursement policy.",
       },
       {
-        lead: "Built a geographic analysis tool",
-        text: " using the Google Maps API to assess employee commuting distances, helping HR optimize travel compensation policies.",
+        group: "Data Science Intern",
+        lead: "Recognized for self-directed technical learning and selected for a concurrent data science internship",
+        text: " while maintaining my operations role, partnering with the Clinical Data Science team to build an interactive Mode dashboard analyzing small cell lung cancer and gene mutation patterns to inform drug development.",
+      },
+      {
+        group: "Data Science Intern",
+        lead: "Quickly mastered an unfamiliar clinical data domain with minimal assistance",
+        text: ", leveraging SQL, Google Cloud Platform (GCP), GitHub, and Mode to analyze complex datasets, develop interactive dashboards, and communicate findings to technical and nontechnical stakeholders.",
       },
     ],
     funFact:
       "I taught myself how to code during this time due to my interest in it, using free resources online. This was right before popular AI models became publicly available, and I was coding directly, learning about syntax, data structures and more.",
   },
   {
-    title: "Office Manager",
-    company: "Biker's Outfitter",
-    focus: "",
+    title: "Office Manager & Engineer",
+    company: "Biker's Outfitters",
+    companyDescription: "Motorcycle Dealership",
+    summary:
+      "Biker's Outfitters is my family's business, which I grew up in. Over the years I have contributed in many ways, and most recently have been contributing with my skills in computer science.",
     years: "2017 - 2021",
     bullets: [
       {
@@ -212,14 +228,14 @@ export const roles: Role[] = [
       },
       {
         lead: "Spearheaded the end-to-end development and launch of the company's e-commerce platform",
-        text: ", leading service selection, cost analysis, project planning, site development, contractor management, and inventory onboarding.",
+        text: " (bikersoutfitter.com), leading service selection, cost analysis, project planning, site development, contractor management, and inventory onboarding.",
       },
       {
         lead: "Automated inventory management by developing a web scraper",
         text: " to extract product data and images from supplier websites, reducing manual work and improving efficiency.",
       },
       {
-        lead: "Successfully migrated the organization's email infrastructure to a new provider",
+        lead: "Migrated the organization's email infrastructure to a new provider",
         text: ", managing domain and DNS transitions while preserving all existing mailboxes and minimizing service downtime.",
       },
     ],
