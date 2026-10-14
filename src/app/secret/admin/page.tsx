@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { cookies } from "next/headers";
+import AdminNav from "@/components/admin/admin-nav";
 import LinkGenerator from "@/components/admin/link-generator";
 import LinkStats from "@/components/admin/link-stats";
 import LoginForm from "@/components/admin/login-form";
@@ -20,6 +21,7 @@ export default async function AdminPage() {
     <main className="relative z-10">
       <section className="border-t border-line px-0 py-[75px] text-center">
         <Wrap>
+          {authed && <AdminNav active="builder" />}
           <h1 className="mb-10 text-[clamp(1.75rem,4vw,2.5rem)] leading-[.98] font-bold tracking-[-.05em]">
             {authed ? "Link builder" : "Hello?"}
           </h1>
