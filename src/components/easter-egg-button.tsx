@@ -63,7 +63,7 @@ export default function EasterEggButton({
           dialogRef.current?.showModal();
           posthog.capture("easter_egg_opened", { role });
         }}
-        className="cursor-pointer border-0 bg-transparent p-0 text-inherit underline [font:inherit] hover:text-pink"
+        className="cursor-pointer border-0 bg-transparent p-0 text-pink-soft underline [font:inherit] hover:text-pink"
       >
         {label}
       </button>
