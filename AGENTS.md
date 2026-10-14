@@ -126,6 +126,12 @@ Only sync when explicitly asked ("update skills," "sync links," or similar)
 local values, and apply the changes to the files above — don't touch
 `roganhope/resumes` itself unless explicitly asked.
 
+**Never `git pull` (or fetch, checkout, or otherwise update) a local clone of
+`roganhope/resumes`.** Read from the repo with `gh api` only. The local clone
+at `../resumes` sits on its own branch with work in progress, and "pull the
+latest resumes change" means fetch the content through `gh api`, not touch that
+clone.
+
 ## PostHog: traffic source dashboard
 
 The PostHog account is **project 535257**, under the `hope.e.rogan@gmail.com`

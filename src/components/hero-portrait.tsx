@@ -15,7 +15,7 @@ export default function HeroPortrait({ className }: { className?: string }) {
         </SpinningText>
       </div>
       <div className="absolute inset-0 m-auto h-28 w-28 overflow-hidden rounded-full border border-line">
-        <Image src="/hope-hero-bw.webp" alt="Hope smiling" fill sizes="112px" className="object-cover" />
+        <Image src="/hope-hero-bw.webp" alt="Hope smiling" fill sizes="112px" loading="eager" className="object-cover" />
       </div>
     </div>
   );
