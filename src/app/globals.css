@@ -18,6 +18,8 @@
   --line: #e2dfe0;
   --line-strong: #d2cdcf;
   --pink: #ff3b8d;
+  /* A quieter pink for small inline links, so they don't compete with the accent. */
+  --pink-soft: #c2578a;
   /* Text sitting on a pink fill — stays dark in both themes. */
   --on-accent: #171516;
   /* The quiet zone behind a QR code — stays white in both themes, because a
@@ -53,6 +55,7 @@
   --line: #322f30;
   --line-strong: #454142;
   --pink: #ff3b8d;
+  --pink-soft: #cf7096;
   --on-accent: #171516;
   --scan: #ffffff;
 
@@ -132,6 +135,7 @@
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
   --color-pink: var(--pink);
+  --color-pink-soft: var(--pink-soft);
   --color-on-accent: var(--on-accent);
   --color-scan: var(--scan);
 
