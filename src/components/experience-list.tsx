@@ -4,11 +4,23 @@ import { useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import posthog from "posthog-js";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import EasterEggButton from "@/components/easter-egg-button";
 import ExperienceToggleIcon from "@/components/experience-toggle-icon";
 import { roles, type Bullet, type Role } from "@/lib/content";
 
 function renderFunFact(role: Role) {
-  const { funFact, funFactLink } = role;
+  const { funFact, funFactLink, funFactEasterEgg } = role;
+  const eggIndex = funFactEasterEgg ? funFact.indexOf(funFactEasterEgg.text) : -1;
+  if (funFactEasterEgg && eggIndex !== -1) {
+    return (
+      <>
+        {funFact.slice(0, eggIndex)}
+        <EasterEggButton label={funFactEasterEgg.text} image={funFactEasterEgg.image} alt={funFactEasterEgg.alt} caption={funFactEasterEgg.caption} role={role.title} />
+        {funFact.slice(eggIndex + funFactEasterEgg.text.length)}
+      </>
+    );
+  }
+
   const linkIndex = funFactLink ? funFact.indexOf(funFactLink.text) : -1;
   if (!funFactLink || linkIndex === -1) return funFact;
 

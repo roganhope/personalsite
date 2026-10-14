@@ -32,6 +32,8 @@ export type Role = {
   funFact: string;
   /** Turns a substring of funFact into a link, if present. */
   funFactLink?: { text: string; href: string };
+  /** Turns a substring of funFact into a button that opens a photo popup. */
+  funFactEasterEgg?: { text: string; image: string; alt: string; caption?: string };
 };
 
 export type School = {
@@ -240,7 +242,13 @@ export const roles: Role[] = [
       },
     ],
     funFact:
-      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for trade shows from the age of eight and worked there throughout high school and college. I learned the value of hard work and grit.",
+      "I grew up in a Motorcycle Dealership family and would travel across the East Coast for trade shows from the age of eight and worked there throughout high school and college. I learned the value of hard work and grit. Click here for an easter egg.",
+    funFactEasterEgg: {
+      text: "Click here for an easter egg",
+      image: "/bikers-easter-egg.jpg",
+      alt: "Hope at age three sitting on a motorcycle outside Biker's Outfitters",
+      caption: "That's me! Ask me if I know how to ride a motorcycle.",
+    },
   },
 ];
 
