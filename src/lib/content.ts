@@ -135,7 +135,7 @@ export const roles: Role[] = [
   {
     title: "Project Manager & Software Engineer",
     company: "The Jade Platform",
-    companyDescription: "Fintech Startup: Options Management for Wealth Management Advisors",
+    companyDescription: "Fintech Startup, Options",
     years: "2025 - Present",
     bullets: [
       {
@@ -179,7 +179,7 @@ export const roles: Role[] = [
   {
     title: "Data Science Intern & Operations Representative",
     company: "EQRx",
-    companyDescription: "Biotech Startup: Pharmaceuticals",
+    companyDescription: "Biotech Startup, Pharmaceuticals",
     years: "2021 - 2023",
     bullets: [
       {
@@ -326,7 +326,7 @@ export const reviews: Review[] = [
   {
     name: "Jeffrey Breen",
     title: "Technology investor; analytics and AI specialist; hands-on data geek at heart",
-    relationship: "Senior to Hope at Jade",
+    relationship: "Advisor to Jade",
     date: "Jul 2026",
     quote:
       "Hope was instrumental in building and launching the Jade Platform, an integrated options platform to help RIAs and other wealth managers turn their clients’ stock portfolios into actively managed sources of income with better risk controls. To focus only on her success herding the proverbial cats around Product would risk underselling her technical contributions. I can’t think of a single part of the platform she wasn’t hands-on with, right down to AWS infrastructure work such as wiring up Claude Code through Bedrock for the whole team to use — and then using it to prototype a chatbot interface. Her technical experience is matched by a disciplined MVP orientation and a relentless commitment to shipping: she is not afraid to cut scope to what customers actually need to get working software into customers’ hands rather than gold-plating in a vacuum.",

@@ -95,7 +95,14 @@ export default function ExperienceList() {
                   <p className="m-0 text-[1.05rem] font-bold">{role.title}</p>
                   <p className="m-0 text-muted text-[.92rem]">
                     {role.company}
-                    {role.companyDescription && <em className="ml-2 italic">{role.companyDescription}</em>}
+                    {role.companyDescription && (
+                      <>
+                        <span aria-hidden="true" className="mx-1.5">
+                          ·
+                        </span>
+                        <em className="italic">{role.companyDescription}</em>
+                      </>
+                    )}
                   </p>
                 </div>
                 <time className="text-[.76rem] font-[750] whitespace-nowrap">{role.years}</time>

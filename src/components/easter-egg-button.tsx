@@ -22,13 +22,32 @@ export default function EasterEggButton({
   role: string;
 }) {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  // Body overflow to put back when the popup closes; null while unlocked.
-  const savedOverflow = useRef<string | null>(null);
+  // Page state to put back when the popup closes; null while unlocked.
+  const locked = useRef<{ scrollY: number; htmlOverflowY: string; body: string[] } | null>(null);
 
+  // A modal <dialog> doesn't stop the page behind it from scrolling, and
+  // `overflow: hidden` would drop the scrollbar and shift the page sideways. So
+  // pin the body in place instead and force the scrollbar track to stay.
+  const lockScroll = () => {
+    if (locked.current) return;
+    const { style: html } = document.documentElement;
+    const { style: body } = document.body;
+    const scrollY = window.scrollY;
+    locked.current = { scrollY, htmlOverflowY: html.overflowY, body: [body.position, body.top, body.width] };
+    html.overflowY = "scroll";
+    body.position = "fixed";
+    body.top = `-${scrollY}px`;
+    body.width = "100%";
+  };
   const unlockScroll = () => {
-    if (savedOverflow.current === null) return;
-    document.body.style.overflow = savedOverflow.current;
-    savedOverflow.current = null;
+    if (!locked.current) return;
+    const { scrollY, htmlOverflowY, body: saved } = locked.current;
+    const { style: body } = document.body;
+    document.documentElement.style.overflowY = htmlOverflowY;
+    [body.position, body.top, body.width] = saved;
+    locked.current = null;
+    // <html> is scroll-smooth; jump straight back rather than animating.
+    window.scrollTo({ top: scrollY, behavior: "instant" });
   };
   useEffect(() => unlockScroll, []);
   // A <dialog> can't live inside the fun fact's <p>, so it's portaled to <body>
@@ -40,9 +59,7 @@ export default function EasterEggButton({
       <button
         type="button"
         onClick={() => {
-          // A modal <dialog> doesn't stop the page behind it from scrolling.
-          savedOverflow.current ??= document.body.style.overflow;
-          document.body.style.overflow = "hidden";
+          lockScroll();
           dialogRef.current?.showModal();
           posthog.capture("easter_egg_opened", { role });
         }}
