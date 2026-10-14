@@ -4,6 +4,7 @@ import LinkGenerator from "@/components/admin/link-generator";
 import LinkStats from "@/components/admin/link-stats";
 import LoginForm from "@/components/admin/login-form";
 import RegisteredLinks from "@/components/admin/registered-links";
+import TrafficStats from "@/components/admin/traffic-stats";
 import Wrap from "@/components/wrap";
 import { SESSION_COOKIE, verifySessionValue } from "@/lib/admin-session";
 
@@ -27,6 +28,7 @@ export default async function AdminPage() {
             <div className="flex flex-col gap-14">
               <LinkGenerator />
               <LinkStats />
+              <TrafficStats />
               <RegisteredLinks />
             </div>
           ) : (
